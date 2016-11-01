@@ -8,6 +8,7 @@ use Auth;
 use Origami\Models\User;
 use Origami\Models\Module;
 use Origami\Models\Image;
+use Origami\Models\Settings;
 
 class OrigamiServiceProvider extends ServiceProvider
 {
@@ -18,12 +19,14 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->initCustomGuard();
         $this->initMigrations();
         $this->initRoutes();
         $this->initViews();
         $this->initPublications();
         $this->initModelBindings();
-        //$this->initHousekeeping();
+        $this->initVersionControl();
+        $this->initHousekeeping();
     }
 
     /**
@@ -36,6 +39,32 @@ class OrigamiServiceProvider extends ServiceProvider
         $this->initConsole();
         $this->initMiddleware();
         $this->initFacades();
+    }
+
+    /**
+     * Init custom guard
+     */
+    private function initCustomGuard()
+    {
+        config(['auth.guards' => array_merge(
+            config('auth.guards'),
+            [
+                'origami'=> [
+                    'driver' => 'session',
+                    'provider' =>'origami_users',
+                ]
+            ])
+        ]);
+
+        config(['auth.providers' => array_merge(
+            config('auth.providers'),
+            [
+                'origami_users' => [
+                    'driver' => 'eloquent',
+                    'model' => User::class,
+                ]
+            ])
+        ]);
     }
 
     /**
@@ -121,6 +150,19 @@ class OrigamiServiceProvider extends ServiceProvider
     }
 
     /**
+     * Init version control
+     */
+    private function initVersionControl()
+    {
+        try {
+            $installed = Settings::get('version');
+            if($installed!=origami_version()) dd('ok');
+        } catch (\Exception $e) {
+            
+        }
+    }
+
+    /**
      * Init Facades
      */
     private function initFacades()
@@ -133,7 +175,11 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     private function initHousekeeping()
     {
-        Image::cleanup();
+        try {
+            Image::cleanup();
+        } catch(\Exception $e) {
+
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ use Validator;
 use Illuminate\Console\Command;
 
 use Origami\Models\User;
+use Origami\Models\Settings;
 
 class InstallCMS extends Command
 {
@@ -43,7 +44,10 @@ class InstallCMS extends Command
      */
     public function handle()
     {
+        $this->checkInstallation();
+
         $pause = 1;
+        $this->callSilent('vendor:publish');
         $this->info('Welcome to the Origami CMS');
         sleep($pause);
         $this->info('Let\'s launch the installation');
@@ -51,7 +55,7 @@ class InstallCMS extends Command
         if (!$this->confirm('Did you correctly fill in the .env file? [y|N]')) return;
         $this->info('Let\'s run the migrations');
         sleep($pause);
-        $this->call('migrate:refresh');
+        $this->call('migrate');
         sleep($pause);
         $this->info('Let\'s create the administrator');
         sleep($pause);
@@ -63,7 +67,7 @@ class InstallCMS extends Command
         while(empty($emailApproved)) {
             $email = $this->ask('What is your email?');
             $validator = Validator::make(['email' => $email], [
-                'email' => 'required|email',
+                'email' => 'required|email|unique:origami_users,email',
             ]);
             if ($validator->fails()) {
                 $this->error('Invalid email');
@@ -92,6 +96,8 @@ class InstallCMS extends Command
         sleep($pause);
         $this->info('Goto '.url('origami').' to get started.');
         sleep($pause);
+
+        Settings::set('version', origami_version());
     }
 
     /**
@@ -109,5 +115,20 @@ class InstallCMS extends Command
         return true;
     }
 
+    /**
+     * Check installation
+     */
+    protected function checkInstallation()
+    {
+        try {
+            $installed = Settings::get('version');
+            if($installed==origami_version()) {
+                $this->error('This version of Origami is already installed');
+                die();
+            }
+        } catch (\Exception $e) {
+            
+        }
+    }
 
 }

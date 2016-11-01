@@ -135,3 +135,8 @@ function origami_content_url($path='')
 	return asset('storage/'.$path);
 }
 
+function origami_version()
+{
+	return file_get_contents(__DIR__.'/../../version');
+}
+
