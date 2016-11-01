@@ -1,0 +1,204 @@
+@import 'node_modules/jquery-file-upload/css/uploadfile';
+
+.fileuploader
+{
+	border: 1px dotted $origami-theme-lines;
+	padding:15px 15px 0px;
+	border-radius: 2px;
+
+	.ajax-upload-dragdrop
+	{
+		font-family: $origami-font-family;
+		border: none;
+		width: 100% !important;
+		color: $origami-font-color-semilight;
+		padding: 0;
+		font-size: 12px;
+
+		// Button
+		.ajax-file-upload
+		{
+			position: relative;
+			top: 4px;
+			font-family: $origami-font-family;
+			font-size: 10px;
+			font-weight: 500;
+			text-transform: uppercase;
+			border-radius: 2px;
+			cursor:pointer;	
+			line-height: 25px;
+			height: 24px;
+			margin:0 10px 10px 0;
+			display: inline-block;
+			text-decoration: none;
+			padding: 0 10px; 
+			color: #fff;
+			background: $origami-theme-primary;
+			border: none;
+			box-shadow: none; 
+		}
+
+	}
+}
+
+.ajax-file-upload-container
+{
+	display: none;
+}
+
+.uploadedfiles
+{
+	margin: 10px 0 0 0;
+
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
+	}
+
+	li
+	{
+		position: relative;
+		display: block;
+		float: left;
+
+		width: 60px;
+		height: 60px;
+		background: $origami-theme-light no-repeat center center;
+		background-size: cover;
+		margin: 0 10px 15px 0;
+		border-radius: 2px;
+
+		&:after
+		{
+			content: "";
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			top: 18px;
+			left: 18px;
+			border-radius: 100%;
+			border: 1px solid $origami-theme-primary;
+			border-top-color: rgba($origami-theme-primary, 0);
+			-webkit-animation: preloader .4s linear infinite;
+   			animation: preloader .4s linear infinite;
+		}
+
+		&.active
+		{
+
+			&:after
+			{
+				display: none;
+			}
+		}
+
+		&.placeholder
+		{
+			&:after
+			{
+				display: none;
+			}
+
+			&:before
+			{
+				
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				line-height: 60px;
+	
+	   			font-family: 'fontawesome';
+	   			content: "\f063";
+	   			color: $origami-theme-primary;
+
+			}
+		}
+	}
+
+	&.single
+	{
+		li
+		{
+			width: 300px;
+			max-width: 100%;
+			height: 300px;
+
+			&:after
+			{
+				top: 138px;
+				left: 138px;
+			}
+		}
+	}
+	
+	&:not(&.single)
+	{
+		li
+		{
+			.image_actions
+			{
+				display: none;
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				height: 100%;
+				background: rgba($origami-theme-dark,.9);
+				border-radius: 2px;
+				top: 0px;
+				left: 0;
+				padding: 22px 0 0 0;
+				text-align: center;
+
+				> div
+				{
+					display: inline-block;
+					color: #fff;
+
+					.fa-close
+					{
+						cursor: pointer;
+					}
+					
+					&:first-child
+					{
+						padding: 0 2px 0 0;
+					}
+				}
+			}
+
+			&:hover
+			{
+				&.active
+				{
+					.image_actions
+					{
+						display: block;
+					}
+				}
+			}
+		}
+	}
+
+	&.single
+	{
+		.image_actions
+		{
+			display: none;
+		}
+	}
+}
+
+@keyframes preloader {
+	from {transform: rotate(0deg);}
+	to {transform: rotate(360deg);}
+}
+@-webkit-keyframes preloader {
+	from {-webkit-transform: rotate(0deg);}
+	to {-webkit-transform: rotate(360deg);}
+}
+

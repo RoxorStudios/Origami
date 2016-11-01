@@ -1,0 +1,274 @@
+.form-group
+{
+	position: relative;
+	margin: 0 0 15px;
+
+	label
+	{
+		display: block;
+		font-size: 14px;
+		font-weight: 500;
+		margin: 0 0 10px;
+
+		small
+		{
+			position: relative;
+			font-size: 11px;
+			color: darken($origami-font-color-light,10%);
+			font-weight: 100;
+			margin: 0 0 0 6px;
+			top: 0px;
+		}
+
+		span.required
+		{
+			position: relative;
+			float: right;
+			font-size: 9px;
+			text-transform: uppercase;
+			top: 4px;
+			color: $origami-font-color-light;
+		}
+	}
+
+	p.helper
+	{
+		position: relative;
+		font-size: 11px;
+		color: darken($origami-font-color-light,10%);
+		margin: 0 0 20px 0;
+	}
+
+
+	.form-input
+	{
+		border: 1px solid $origami-theme-lines;
+		height: 40px;
+		padding: 0 15px;
+		border-radius: $origami-border-radius;
+		width: 100%;
+		box-sizing: border-box;
+		font-family: $origami-font-family;
+		font-weight: 400;
+		margin: 0 0 10px;
+		font-size: 13px;
+		-webkit-appearance: none;
+
+		&:focus
+		{
+			outline: none;
+			border-color: $origami-theme-primary;
+		}
+	}
+
+	.form-textarea
+	{
+		border: 1px solid $origami-theme-lines;
+		border-radius: $origami-border-radius;
+		width: 100%;
+		box-sizing: border-box;
+		font-family: $origami-font-family;
+		font-weight: 400;
+		margin: 0 0 10px;
+		font-size: 13px;
+		padding: 15px;
+		line-height: 22px;
+		-webkit-appearance: none;
+
+		&:focus
+		{
+			outline: none;
+			border-color: $origami-theme-primary;
+		}
+	}
+	
+}
+
+.checkbox
+{
+	margin: 0 0 30px;
+
+	label
+	{
+		display: block;
+		font-size: 12px;
+		font-weight: 400;
+	}
+}
+
+.radiobutton-icon
+{
+	display: inline-block;
+	margin: 0 10px 10px 0;
+
+
+	.radio
+	{
+		opacity: 0;
+		position: absolute;
+		z-index: 100;
+	}
+
+	label
+	{
+		position: relative;
+		display: block;
+		width: 100px;
+		height: 100px;
+		background: #fff;
+		border-radius: 2px;
+		border: 1px solid $origami-theme-lines;
+		padding: 70px 0 0 0;
+		text-align: center;
+		font-weight: 100;
+		font-size: 12px;
+		color: $origami-font-color-semilight;
+		cursor: pointer;
+
+		.icon
+		{
+			position: absolute;
+			width: 28px;
+			height: 28px;
+			left: 50%;
+			top: 28px;
+			margin: 0 0 0 -14px;
+			fill: $origami-font-color;
+		}
+	}
+
+	.radio:checked ~ label
+	{
+		background: $origami-theme-primary;
+		border-color: $origami-theme-primary;
+		color: #fff;
+
+		.icon
+		{
+			fill: #fff;
+		}
+	}
+}
+
+.radio-buttons
+{
+	margin: 0 0 10px;
+}
+.radio-button
+{
+	display: inline-block;
+	margin: 0 15px 15px 0;
+	font-size: 12px;
+	font-weight: 100;
+
+	input
+	{
+		position: relative;
+		margin: 0 7px 0 0;
+		top: 0px;
+	}
+}
+
+.checkboxes
+{
+	margin: 0 0 40px;
+}
+
+.switch-checkbox
+{
+	position: relative;
+	padding: 3px 0 0 40px;
+	margin: 0 0 20px;
+	font-size: 12px;
+	font-weight: 100;
+	@include noselect();
+
+	input
+	{
+		position: absolute;
+		opacity: 0;
+	}
+
+	.title
+	{
+		font-weight: 100;
+		font-size: 12px;
+	}
+
+	.check
+	{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 30px;
+		height: 18px;
+		background: darken($origami-theme-light,10%);
+		border-radius: 10px;
+		transition: background .15s ease;
+
+		.handle
+		{
+			position: absolute;
+			top: 2px;
+			left: 2px;
+			background: #fff;
+			width: 14px;
+			height: 14px;
+			border-radius: 100%;
+			transition: left .15s ease;
+		}
+	}
+
+	input:checked ~ .check
+	{
+		background: $origami-theme-success;
+
+		.handle
+		{
+			left: 14px;
+		}
+	}
+}
+
+.options
+{
+	margin: 0 0 0px;
+
+	.option
+	{
+		background: $origami-theme-light;
+		border-radius: 2px;
+		padding: 10px 0 0 10px;
+		margin: 0 0 1px;
+		font-weight: 100;
+	}
+
+	.option-actions
+	{
+		text-align: right;
+		padding: 13px 20px 13px 13px;
+		font-size: 15px;
+
+		li
+		{
+			display: inline-block;
+			color: darken($origami-theme-light,20%);
+			margin: 0 0 0 5px;
+		}
+	}
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color:    $origami-font-color-light;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color:    $origami-font-color-light;
+	opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color:    $origami-font-color-light;
+	opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color:    $origami-font-color-light;
+}

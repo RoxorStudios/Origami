@@ -1,0 +1,39 @@
+#topbar
+{
+	height: 60px;
+	background: #fff;
+
+	@include desktop()
+	{
+		display: none;
+	}
+
+	.logo
+	{
+		display: block;
+		height: 60px;
+		margin: 0;
+		padding: 0;
+		background: url('../images/logo.svg') no-repeat left center;
+		background-size: 120px;
+		margin: 0 0 0 20px;
+	}
+
+	.openmenu
+	{
+		position: absolute;
+		width: 25px;
+		top: 0px;
+		right: 0px;
+		padding: 18px 20px;
+		box-sizing: content-box;
+		cursor: pointer;
+
+		> div
+		{
+			height: 4px;
+			background: darken($origami-theme-light,15%);
+			margin-bottom: 4px;
+		}
+	}
+}

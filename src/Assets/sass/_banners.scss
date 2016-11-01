@@ -1,0 +1,33 @@
+.banner
+{
+	position: relative;
+	height: 200px;
+	background: $origami-theme-dark url('../images/mountain.jpg') no-repeat center 80%;
+	background-size: cover;
+
+	@include desktop()
+	{
+		height: 300px;
+	}
+
+	&:after
+	{
+		content: "";
+		z-index: 1;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba($origami-theme-dark,.6);
+	}
+
+	.content
+	{
+		position: absolute;
+		z-index: 2;
+		padding: 50px;
+		left: 0;
+		bottom: 0;
+	}
+}

@@ -1,0 +1,285 @@
+// Susy
+@import 'node_modules/susy/sass/susy';
+
+// Load in our our variables
+@import 'variables';
+
+// Create grids
+$origami-grid: 12 1/2 fluid float inside;
+$origami-grid-collapse: 12 0 fluid float inside;
+
+// Container
+.container
+{
+	margin: 0 auto;
+	padding: 0 30px;
+}
+
+// Grid
+.grid
+{
+	@include layout($origami-grid);
+	clear: both;
+	margin: 0 gutter() * -1;
+
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
+	}
+}
+
+// Grid collapse
+.grid-collapse
+{
+	@include layout($origami-grid-collapse);
+	margin: 0;
+	clear: both;
+
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
+	}
+}
+
+.show-s, .show-m, .show-l, .show-table-s, .show-table-m, .show-table-l
+{
+	display: none;
+}
+
+// Mobile
+@for $i from 1 through 12
+{
+	.grid
+	{
+		.col-#{$i}
+		{
+			@include layout($origami-grid);
+			@include span($i);
+		}
+		.push-#{$i}
+		{
+			@include layout($origami-grid);
+			@include push($i);
+		}
+		.pull-#{$i}
+		{
+			@include layout($origami-grid);
+			@include pull($i);
+		}
+	}
+
+	.grid-collapse
+	{
+		.col-#{$i}
+		{
+			@include layout($origami-grid-collapse);
+			@include span($i);
+		}
+		.push-#{$i}
+		{
+			@include layout($origami-grid-collapse);
+			@include push($i);
+		}
+		.pull-#{$i}
+		{
+			@include layout($origami-grid-collapse);
+			@include pull($i);
+		}
+	}
+}
+
+// Small
+@media screen and (min-width: $origami-grid-small) 
+{
+
+	.container
+	{
+		width: 100%;
+	}
+	.show-s
+	{
+		display: block;
+	}
+	.show-table-s
+	{
+		display: table-cell;
+	}
+	.grid
+	{
+		@for $i from 1 through 12
+		{
+			.col-s-#{$i}
+			{
+				@include layout($origami-grid);
+				@include span($i);
+			}
+			.push-s-#{$i}
+			{
+				@include layout($origami-grid);
+				@include push($i);
+			}
+			.pull-s-#{$i}
+			{
+				@include layout($origami-grid);
+				@include pull($i);
+			}
+		}
+	}
+	.grid-collapse
+	{
+		@for $i from 1 through 12
+		{
+			.col-s-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include span($i);
+			}
+			.push-s-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include push($i);
+			}
+			.pull-s-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include pull($i);
+			}
+		}
+	}
+}
+
+// Medium
+@media screen and (min-width: $origami-grid-medium)
+{
+
+	.container
+	{
+		width: $origami-grid-medium - 40;
+		padding: 0;
+	}
+	.show-m
+	{
+		display: block;
+	}
+	.show-table-m
+	{
+		display: table-cell;
+	}
+	.grid
+	{
+		@for $i from 1 through 12
+		{
+			.col-m-#{$i}
+			{
+				@include layout($origami-grid);
+				@include span($i);
+			}
+			.push-m-#{$i}
+			{
+				@include layout($origami-grid);
+				@include push($i);
+			}
+			.pull-m-#{$i}
+			{
+				@include layout($origami-grid);
+				@include pull($i);
+			}
+		}
+	}
+	.grid-collapse
+	{
+		@for $i from 1 through 12
+		{
+			.col-m-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include span($i);
+			}
+			.push-m-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include push($i);
+			}
+			.pull-m-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include pull($i);
+			}
+		}
+	}
+}
+
+// Large
+@media screen and (min-width: $origami-grid-large) {
+	.container
+	{
+		width: $origami-grid-large - 40;
+	}
+	.show-l
+	{
+		display: block;
+	}
+	.show-table-l
+	{
+		display: table-cell;
+	}
+	.grid
+	{
+		@for $i from 1 through 12
+		{
+			.col-l-#{$i}
+			{
+				@include layout($origami-grid);
+				@include span($i);
+			}
+			.push-l-#{$i}
+			{
+				@include layout($origami-grid);
+				@include push($i);
+			}
+			.pull-l-#{$i}
+			{
+				@include layout($origami-grid);
+				@include pull($i);
+			}
+		}
+	}
+	.grid-collapse
+	{
+		@for $i from 1 through 12
+		{
+			.col-l-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include span($i);
+			}
+			.push-l-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include push($i);
+			}
+			.pull-l-#{$i}
+			{
+				@include layout($origami-grid-collapse);
+				@include pull($i);
+			}
+		}
+	}
+}
+
+// Block
+.block
+{
+	//height: 30px;
+	background: #333;
+	margin-bottom: 10px;
+}
+

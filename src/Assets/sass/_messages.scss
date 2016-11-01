@@ -1,0 +1,26 @@
+.message
+{
+	padding: 12px;
+	margin: 0 0 25px 0;
+	border-radius: 2px;
+	color: #fff;
+	font-size: 13px;
+	background: $origami-theme-primary;
+	line-height: 18px;
+
+	&.message-error
+	{
+		background: $origami-theme-danger;
+	}
+
+	&.message-success
+	{
+		background: $origami-theme-success;
+	}
+
+	&.message-light
+	{
+		background: $origami-theme-light;
+		color: $origami-font-color;
+	}
+}

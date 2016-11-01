@@ -1,0 +1,53 @@
+@import 'node_modules/vex-js/sass/vex.sass';
+@import 'node_modules/vex-js/sass/vex-theme-os.sass';
+
+.vex-overlay
+{
+	background: rgba($origami-theme-dark,.8);
+	@include vex-animation(vex-fadein .2s)
+}
+.vex.vex-theme-os
+{
+	&.vex-closing .vex-content
+	{
+		@include vex-animation(vex-flyout .2s)
+	}
+
+	.vex-content
+	{
+		@include vex-animation(vex-flyin .2s)
+	}
+
+	.vex-content
+	{
+		background: #fff;
+		box-shadow: none;
+		border-top: none;
+		font-family: $origami-font-family;
+		font-size: 14px;
+		font-weight: 400;
+		color: $origami-font-color;
+		padding: 20px;
+		border-radius: 2px;
+
+		.vex-dialog-form
+		{
+			.vex-dialog-button
+			{
+				border-radius: 2px;
+				padding: 12px 20px;
+		
+				&.vex-dialog-button-primary
+				{
+					background: $origami-theme-primary;
+					font-weight: 700;
+				}
+				&.vex-dialog-button-secondary
+				{
+					background: $origami-theme-light;
+					color: $origami-font-color;
+				}
+			}
+		}
+	}
+}

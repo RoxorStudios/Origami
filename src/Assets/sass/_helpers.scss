@@ -1,0 +1,82 @@
+.cursor-pointer
+{
+	cursor: pointer;
+}
+.hide
+{
+	display: none;
+}
+@for $i from 0 through 50 {
+    .m-#{$i} { margin: $i * 5px !important; }
+    .m-t-#{$i} { margin-top: $i * 5px !important; }
+    .m-b-#{$i} { margin-bottom: $i * 5px !important; }
+    .m-l-#{$i} { margin-left: $i * 5px !important; }
+    .m-r-#{$i} { margin-right: $i * 5px !important; }
+    .p-#{$i} { padding: $i * 5px !important; }
+    .p-t-#{$i} { padding-top: $i * 5px !important; }
+    .p-b-#{$i} { padding-bottom: $i * 5px !important; }
+    .p-l-#{$i} { padding-left: $i * 5px !important; }
+    .p-r-#{$i} { padding-right: $i * 5px !important; }
+}
+img
+{
+    position: relative;
+
+    &.circle
+    {
+        border-radius: 100%;
+    }
+
+    
+}
+
+.status
+{
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 3px solid #fff;
+    background: $origami-theme-green;
+    border-radius: 100px;
+    z-index: 100;
+    top: 40px;
+    left: 25px;
+}
+
+.label
+{
+    position: relative;
+    background: $origami-theme-green;
+    font-size: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 700;
+    padding: 1px 3px 0;
+    border-radius: 2px;
+    top: -1px;
+    left: 5px;
+}
+
+.only-desktop
+{
+    @media (max-width: #{$origami-desktop-width}) {
+        display: none;
+    }
+}
+.only-mobile
+{
+    @media (min-width: #{$origami-desktop-width}) {
+        display: none !important;
+    }
+}
+
+.fa-reorder
+{
+    cursor: move;
+}
+
+.template
+{
+    display: none;
+}

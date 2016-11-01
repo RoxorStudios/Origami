@@ -1,0 +1,148 @@
+#sidebar
+{
+	width: 70%;
+	height: 100%;
+	background: #fff;
+	position: fixed;
+	padding: 0;
+	top: 0;
+	right: -70%;
+	z-index: $origami-zindex-sidebar;
+	zoom: 125%;
+	transition: right .4s ease;
+
+	&.open
+	{
+		right: 0;
+	}
+
+	@include desktop() {
+		position: absolute;
+		width: $origami-sidebar-width;
+		left: 0;
+		right: auto;
+		zoom: 100%;
+	}
+
+	.logo
+	{
+		display: block;
+		width: 100%;
+		height: 30px;
+		margin: 0;
+		padding: 0;
+
+		@include desktop()
+		{
+			background: url('../images/logo.svg') no-repeat 40px center;
+			background-size: 135px;
+			padding: 60px 0;
+		}
+	}
+
+	.padding
+	{
+		padding: 0 25px;
+
+		@include desktop() {
+			padding: 0 40px;
+		}
+	}
+
+	.menu
+	{
+		margin: 0 0 25px;
+
+		li
+		{
+
+			a
+			{
+				position: relative;
+				display: block;
+				font-size: 14px;
+				color: $origami-font-color;
+				text-decoration: none;
+				line-height: 26px;
+
+				&:hover
+				{
+					color: $origami-theme-primary;
+				}
+
+				small
+				{
+					position: absolute;
+					top: 4px;
+					right: 0;
+					font-size: 9px;
+					width: 18px;
+					line-height: 18px;
+					text-align: center;
+					border-radius: 3px;
+					font-weight: 400;
+					color: $origami-font-color;
+				}
+			}
+
+			&.active
+			{
+				
+				a
+				{
+					font-weight: 600;
+					color: $origami-font-color;
+
+					small
+					{
+						background: darken($origami-theme-light,5%);
+					}
+				}
+			}
+		}
+	}
+
+	.icons
+	{
+		margin: 30px 0 0 0;
+
+		li
+		{
+			display: inline-block;
+			width: 20px;
+
+			a
+			{
+				.icon
+				{
+					width: 20px;
+					height: 20px;
+				}
+			}
+		}
+	}
+}
+
+#closeSidebar
+{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: $origami-zindex-sidebar-overlay;
+	pointer-events: none;
+	transition: background .3s ease;
+
+	@include desktop()
+	{
+		display: none;
+	}
+
+	&.active
+	{
+		background: rgba(darken($origami-theme-dark,5%),.9);
+		pointer-events: auto;
+		cursor: pointer;
+	}
+}
