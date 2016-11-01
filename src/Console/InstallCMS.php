@@ -44,10 +44,12 @@ class InstallCMS extends Command
      */
     public function handle()
     {
-        $this->checkInstallation();
-
         $pause = 1;
+
+        $this->checkInstallation();
+        $this->callSilent('storage:link');     
         $this->callSilent('vendor:publish');
+
         $this->info('Welcome to the Origami CMS');
         sleep($pause);
         $this->info('Let\'s launch the installation');
