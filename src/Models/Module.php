@@ -29,7 +29,7 @@ class Module extends Model
      */
     public function scopeAccessible($query)
     {
-        if(!Auth::guard('origami')->user()->admin)
+        if(!Auth::guard('origami')->user() || !Auth::guard('origami')->user()->admin)
             return $query->where('only_admin', false);
     }
 

@@ -53186,7 +53186,7 @@ $('.fileuploader').each(function() {
 	$(this).children('.selectfile').uploadFile({
 		multiple: multiple,
 		url: app.origami_url('/entries/'+module+'/upload')+"?element="+element.attr('id')+'&field='+name,
-		fileName: 'image',
+		fileName: 'origami-image',
 		acceptFiles:"image/*",
 		dragDropStr: "<span><b>"+sentence+"</b></span>",
 		uploadStr:"Select",

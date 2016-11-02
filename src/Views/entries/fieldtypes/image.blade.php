@@ -14,7 +14,7 @@
 						</li>
 					@endforeach
 				</ul>
-				<input type="hidden" name="{{ $field->identifier }}" value="{{ $entry->fetchImageListWithField($field) }}">
+				<input type="text" name="{{ $field->identifier }}" value="{{ $entry->fetchImageListWithField($field) }}">
 			</div>
 		</div>
 	</div>

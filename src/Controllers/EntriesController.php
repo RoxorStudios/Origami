@@ -87,11 +87,11 @@ class EntriesController extends Controller
      */
     public function upload(Request $request, Module $module)
     {
-        if (!$request->file('image')->isValid())
+        if (!$request->file('origami-image')->isValid())
             return false;
         
         $field = $module->fields()->where('identifier', $request->input('field'))->first();
-        return Image::saveImageForField($field, $request->file('image'));
+        return Image::saveImageForField($field, $request->file('origami-image'));
     }
 
     /**
