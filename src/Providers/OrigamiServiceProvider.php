@@ -156,7 +156,9 @@ class OrigamiServiceProvider extends ServiceProvider
     {
         try {
             $installed = Settings::get('version');
-            if($installed!=origami_version()) dd('ok');
+            if($installed!=origami_version()) {
+                
+            }
         } catch (\Exception $e) {
             
         }
