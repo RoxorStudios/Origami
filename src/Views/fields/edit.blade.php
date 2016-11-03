@@ -248,13 +248,13 @@
 				resize: {
 					active: {{ !empty(origami_form($field, 'options')['image']['resize']['active']) ? origami_form($field, 'options')['image']['resize']['active'] : 0 }},
 					width: {{ !empty(origami_form($field, 'options')['image']['resize']['width']) ? origami_form($field, 'options')['image']['resize']['width'] : 1000 }},
-					height: {{ !empty(origami_form($field, 'options')['image']['resize']['width']) ? origami_form($field, 'options')['image']['resize']['width'] : 1000 }},
+					height: {{ !empty(origami_form($field, 'options')['image']['resize']['height']) ? origami_form($field, 'options')['image']['resize']['height'] : 1000 }},
 					crop: {{ !empty(origami_form($field, 'options')['image']['resize']['crop']) ? origami_boolToInt(origami_form($field, 'options')['image']['resize']['crop']) : 0 }},
 				},
 				thumbnail: {
 					active: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['active']) ? origami_form($field, 'options')['image']['thumbnail']['active'] : 0 }},
 					width: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['width']) ? origami_form($field, 'options')['image']['thumbnail']['width'] : 500 }},
-					height: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['width']) ? origami_form($field, 'options')['image']['thumbnail']['width'] : 500 }},
+					height: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['height']) ? origami_form($field, 'options')['image']['thumbnail']['height'] : 500 }},
 					crop: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['crop']) ? origami_boolToInt(origami_form($field, 'options')['image']['thumbnail']['crop']) : 0 }},
 				},
 			},
