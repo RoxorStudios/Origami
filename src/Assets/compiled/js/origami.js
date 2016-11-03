@@ -53225,8 +53225,6 @@ $(".uploadedfiles").sortable({
 	},
 });
 
-
-
 $(document).on('click','.remove-image', function() {
 	uid = $(this).closest('li').data('uid');
 	name = $(this).closest('.fileuploader').data('name');

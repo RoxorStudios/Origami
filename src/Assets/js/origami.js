@@ -17,6 +17,7 @@ app = new Vue({
 		sidebar: {
 			open: false,
 		},
+		
 		// Form elements
 		user: {},
 		module: {},
@@ -175,8 +176,6 @@ $(".uploadedfiles").sortable({
 		$('input[name='+name+']').val(entries.join());
 	},
 });
-
-
 
 $(document).on('click','.remove-image', function() {
 	uid = $(this).closest('li').data('uid');
