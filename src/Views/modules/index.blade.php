@@ -24,21 +24,23 @@
 
 				<tbody>
 					@foreach($modules as $module)
-					<tr data-uid="{{ $module->uid }}" onclick="window.location.href='{{ origami_url('/modules/'.$module->uid.'/fields') }}'">
-						@if($modules->count() > 1)
-						<td width="25" class="l reorder only-desktop"><i class="fa fa-reorder"></i></td>
-						@endif
-						<td>{{ $module->name }}</td>
-						<td class="show-table-l" align="center">{{ $module->fields->count() }}</td>
-						<td class="show-table-l" align="right">
-							<ul class="information">
-								@if($module->list)
-								<li title="list"><svg class="icon"><use xlink:href="#icon-layers"/></use></svg></li>
-								@endif
-								@if($module->only_admin)<li title="only admins"><svg class="icon"><use xlink:href="#icon-id-card"/></use></svg></li>@endif
-							</ul>
-						</td>
-					</tr>
+					
+						<tr data-uid="{{ $module->uid }}" onclick="window.location.href='{{ origami_url('/modules/'.$module->uid.'/fields') }}'">
+							@if($modules->count() > 1)
+							<td width="25" class="l reorder only-desktop"><i class="fa fa-reorder"></i></td>
+							@endif
+							<td>{{ $module->name }}</td>
+							<td class="show-table-l" align="center">{{ $module->fields->count() }}</td>
+							<td class="show-table-l" align="right">
+								<ul class="information">
+									@if($module->list)
+									<li title="list"><svg class="icon"><use xlink:href="#icon-layers"/></use></svg></li>
+									@endif
+									@if($module->only_admin)<li title="only admins"><svg class="icon"><use xlink:href="#icon-id-card"/></use></svg></li>@endif
+								</ul>
+							</td>
+						</tr>
+				
 					@endforeach
 				</tbody>
 			</table>

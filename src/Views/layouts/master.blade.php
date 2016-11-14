@@ -18,6 +18,7 @@
 					<h6>Modules</h6>
 					<ul class="menu">
 						@foreach($modules as $module)
+							
 							<li class="{{ origami_active('/entries/'.$module->uid.'*') }}">
 								<a href="{{ origami_url('/entries/'.$module->uid) }}">{{ $module->name }}
 									@if($module->entries->count())
@@ -25,6 +26,7 @@
 									@endif
 								</a>
 							</li>
+					
 						@endforeach
 					</ul>
 				@endif

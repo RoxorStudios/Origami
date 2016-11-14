@@ -53066,6 +53066,7 @@ app = new Vue({
 		sidebar: {
 			open: false,
 		},
+		
 		// Form elements
 		user: {},
 		module: {},

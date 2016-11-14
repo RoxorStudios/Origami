@@ -3,6 +3,7 @@
 namespace Origami\Api;
 
 use Carbon\Carbon;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 use Origami\Models\Module;
 use Origami\Models\Entry;
@@ -25,12 +26,18 @@ class Origami
     /**
      * Where
      */
-    public function where($field, $value)
+    public function where($field, $operator, $value=null)
     {
-    	$this->builder->whereHas('data', function($query) use ($field, $value) {
+        // Make the operator the value
+        if(!$value) {
+            $value = $operator;
+            $operator = 'like';
+        }
+
+    	$this->builder->whereHas('data', function($query) use ($field, $operator, $value) {
     		$query->whereHas('field', function($query) use ($field) {
     			$query->where('identifier', $field);
-    		})->where('value', 'like', $value);
+    		})->where('value',$operator, $value);
     	});
     	return $this;
     }
@@ -123,8 +130,24 @@ class Origami
      */
     private function bindData(Entry $entry)
     {
-    	foreach($entry->data as $data)
-    		$output[$data->field->identifier] = $data->field->type=='image' ? $this->bindImages($data) : $data->value;
+    	foreach($entry->data as $data) {
+            switch($data->field->type) {
+                case 'image':
+                    $output[$data->field->identifier] = $this->bindImages($data);
+                    break;
+                case 'textarea':
+                    if(empty($data->field->options['textarea']['markdown'])) {
+                        $output[$data->field->identifier] = $data->value;
+                    } else {
+                        $parser = new \cebe\markdown\Markdown();
+                        $output[$data->field->identifier] = $parser->parse($data->value);
+                    }
+                    break;
+                default:
+                    $output[$data->field->identifier] = $data->value;
+                    break;
+            }
+        }
 
     	return !empty($output) ? $output : collect();
     }

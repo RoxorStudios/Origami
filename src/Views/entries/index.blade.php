@@ -34,7 +34,6 @@
 									<td>{{ $entry->defaultFieldValue }}</td>
 									<td>{{ origami_diff($entry->created_at) }}</td>
 								</tr>
-
 								@endforeach
 							</tbody>
 						</table>
@@ -46,8 +45,6 @@
 							<a href="{{ origami_url('/entries/'.$module->uid.'/create') }}" class="button button-action">Add item</a>
 						</div>
 					@endif
-				@else
-					coming soon!
 				@endif
 			@else
 				@include('origami::entries.partials.no_fields')

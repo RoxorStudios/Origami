@@ -135,8 +135,29 @@ function origami_content_url($path='')
 	return asset('storage/'.$path);
 }
 
+/**
+ * Get version
+ */
 function origami_version()
 {
 	return file_get_contents(__DIR__.'/../../version');
+}
+
+/**
+ * Get Submodule tree
+ */
+function getSubmoduleTree($module, $recursive = false)
+{
+	$output = [];
+	
+	if($module->field) {
+		$output[] = $module->field->module;
+		$output = array_merge($output,getSubmoduleTree($module->field->module,true));
+	}
+
+	if(!$recursive)
+		return array_reverse($output);
+
+	return $output;
 }
 

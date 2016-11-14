@@ -105,4 +105,12 @@ class Module extends Model
         return $this->hasManyThrough('Origami\Models\Data', 'Origami\Models\Entry');
     }
 
+    /**
+     * Has many submodules trough fields
+     */
+    public function submodules()
+    {
+        return $this->hasManyThrough('Origami\Models\Module', 'Origami\Models\Field');
+    }
+
 }

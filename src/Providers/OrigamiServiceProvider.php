@@ -98,7 +98,7 @@ class OrigamiServiceProvider extends ServiceProvider
             $view->withMe(Auth::guard('origami')->user());
         });
         view()->composer('origami::layouts.master', function($view){
-            $view->withModules(Module::accessible()->orderBy('position', 'asc')->get(['uid','name']));
+            $view->withModules(Module::accessible()->whereDoesntHave('field')->orderBy('position', 'asc')->get(['uid','name']));
             if(Auth::guard('origami')->user()->admin)
                 $view->withCounters([
                     'users' => User::count(),
@@ -139,17 +139,6 @@ class OrigamiServiceProvider extends ServiceProvider
     }
 
     /**
-     * Init model bindings
-     */
-    private function initModelBindings()
-    {
-        $this->bindModel('user', 'users');
-        $this->bindAccessibleModel('module', 'modules');
-        $this->bindModel('field', 'modules');
-        $this->bindModel('entry', 'modules');
-    }
-
-    /**
      * Init version control
      */
     private function initVersionControl()
@@ -184,6 +173,23 @@ class OrigamiServiceProvider extends ServiceProvider
         }
     }
 
+        /**
+     * Init model bindings
+     */
+    private function initModelBindings()
+    {
+        $this->bindModel('user', 'users');
+        $this->bindAccessibleModel('module', 'modules');
+        $this->bindModel('field', 'modules');
+        $this->bindModel('entry', 'modules');
+
+        $this->app['router']->bind('Submodule', function ($value) {
+            dd('ok');
+            dd(Field::where('uid',$value)->first());
+           
+        });
+    }
+
     /**
      * Bind model
      */
@@ -202,6 +208,7 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     private function bindAccessibleModel($type, $fallbackUrl)
     {
+       
         $this->app['router']->bind($type, function ($value) use ($type, $fallbackUrl) {
             $model = '\Origami\\Models\\'.ucfirst($type);
             $eloquent = new $model;

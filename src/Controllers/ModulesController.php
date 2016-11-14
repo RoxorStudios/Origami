@@ -18,7 +18,7 @@ class ModulesController extends Controller
      */
     public function index()
     {
-    	return view('origami::modules.index')->withModules(Module::orderBy('position', 'asc')->get());
+    	return view('origami::modules.index')->withModules(Module::orderBy('position', 'asc')->whereDoesntHave('field')->get());
     }
 
     /**

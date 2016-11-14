@@ -40,7 +40,7 @@
 	}
 
 
-	.form-input
+	.form-input, .form-input-fake
 	{
 		border: 1px solid $origami-theme-lines;
 		height: 40px;
@@ -54,11 +54,20 @@
 		font-size: 13px;
 		-webkit-appearance: none;
 
+		&.form-input-icon
+		{
+			padding-left: 40px;
+		}
+
 		&:focus
 		{
 			outline: none;
 			border-color: $origami-theme-primary;
 		}
+	}
+	.form-input-fake
+	{
+		line-height: 40px;
 	}
 
 	.form-textarea
@@ -81,6 +90,15 @@
 			border-color: $origami-theme-primary;
 		}
 	}
+
+	.icon
+	{
+		position: absolute;
+		margin: 11px 0 0 15px;
+		width: 17px;
+		height: 17px;
+	}
+
 	
 }
 

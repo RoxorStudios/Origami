@@ -20,7 +20,7 @@ class Field extends Model
     ];
 
     /**
-     * Save a module
+     * Save a field
      */
     public function save(array $options = array())
     {
@@ -32,8 +32,9 @@ class Field extends Model
             $this->required = true;
         }
         parent::save($options);
-        if($this->type=="module" && !$this->submodule) {
-            $this->newSubmodule();
+
+        if($this->type=="module") {
+            $this->matchSubmodule();
         }
         
         return $this;
@@ -42,14 +43,18 @@ class Field extends Model
     /**
      * New submodule
      */
-    private function newSubmodule()
+    private function matchSubmodule()
     {
-        $name = $this->module->identifier.'-'.$this->identifier;
-        $module = $this->submodule()->create([
-            'name' => $name,
-            'list' => true,
-            'sortable' => false,
-        ]);
+        if(!$submodule = $this->submodule) {
+            $submodule = $this->submodule()->create([
+                'name' => $this->name,
+                'list' => true,
+            ]);
+        }
+       
+        $submodule->name = $this->name;
+        $submodule->sortable = !empty($this->options['module']['sortable']) ? true : false;
+        $submodule->save();
     }
 
     /**
@@ -78,7 +83,7 @@ class Field extends Model
     }
 
     /**
-     * Has one submodule
+     * (may) Has one submodule
      */
     public function submodule()
     {

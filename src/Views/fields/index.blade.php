@@ -12,14 +12,12 @@
 				@endif
 			</div>
 			<h1 class="boxtitle">
-				@if($module->field)
-				<a href="{{ origami_url('/modules/'.$module->field->module->uid.'/fields') }}">{{ $module->field->module->name }}</a> <span class="light"><i class="fa fa-angle-right"></i></span> 
-				@endif
-				{{ !$module->field ? $module->name : $module->field->name }} 
-				@if($module->field)
-				<small>Submodule</small>
-				@endif
+				
+				@foreach(getSubmoduleTree($module) as $submodule)
+					<a href="{{ origami_url('/modules/'.$submodule->uid.'/fields') }}">{{ $submodule->name }}</a> <span class="light"><i class="fa fa-angle-right"></i></span>
+				@endforeach
 
+				{{ !$module->field ? $module->name : $module->field->name }} 
 
 			</h1>
 			@include('origami::partials.messages')
@@ -27,7 +25,8 @@
 			@if($module->fields->count())
 				<div class="fields">
 					@foreach($fields as $field)
-						<div class="field" data-uid="{{ $field->uid }}" onclick="window.location.href='{{ origami_url('/modules/'.$module->uid.'/fields/'.$field->uid) }}'">
+						<div class="field" data-uid="{{ $field->uid }}" 
+						onclick="window.location.href='{{ $field->submodule ? origami_url('/modules/'.$field->submodule->uid.'/fields/') : origami_url('/modules/'.$module->uid.'/fields/'.$field->uid) }}'">
 							<div class="reorder"><i class="fa fa-reorder"></i></div>
 							<svg class="icon"><use xlink:href="#icon-fieldtype-{{ $field->type }}"/></use></svg>
 							<h5 class="m-b-0">

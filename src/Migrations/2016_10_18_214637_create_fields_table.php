@@ -22,7 +22,7 @@ class CreateFieldsTable extends Migration
             $table->string('type');
             $table->string('description')->nullable();
             $table->boolean('required')->default(false);
-            $table->json('options')->nullable();
+            $table->json('options');
             $table->integer('default')->default(false);
             $table->integer('position');
             $table->index('identifier');

@@ -1,4 +1,4 @@
-<div class="grid">
+<div class="grid m-b-2">
 	<div class="col-m-12">
 		<div class="form-group">
 			@include('origami::entries.fieldtypes.partials.label')

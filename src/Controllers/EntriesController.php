@@ -118,6 +118,7 @@ class EntriesController extends Controller
             $data = $entry->data()->save($data);
             $this->parseData($data);
         }
+        if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
 
         return redirect(origami_path('/entries/'.$module->uid))->with('status', $module->list ? 'Entry edited' : 'Changes saved');
     }
@@ -130,6 +131,16 @@ class EntriesController extends Controller
         $entry->delete();
         return redirect(origami_path('/entries/'.$module->uid))->with('status', 'Entry removed');
     }
+
+    /**
+     * new entry in a submodule
+     */
+    public function submodule(Module $module, Entry $entry, Field $field)
+    {
+
+        return view('origami::entries.edit')->withModule($field->submodule)->withEntry(new Entry)->withFields($field->submodule->fields);
+    }
+
 
     /**
      * Parse value
@@ -159,6 +170,15 @@ class EntriesController extends Controller
         }
 
         return;
+    }
+
+    /**
+     * Add submodule entry
+     */
+    private function linkToSubmodule(Entry $entry, $field)
+    {
+        $field = Field::where('uid',$field)->first();
+        return origami_path('/entries/'.$field->module->uid.'/'.$entry->uid.'/'.$field->uid);
     }
 
 }

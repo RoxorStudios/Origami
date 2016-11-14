@@ -266,3 +266,15 @@
 	}
 
 }
+
+.submodules
+{
+	border-radius: 2px;
+	border: 1px solid $origami-theme-lines;
+
+	.box
+	{
+		background: #fff;
+		padding: 40px;
+	}
+}

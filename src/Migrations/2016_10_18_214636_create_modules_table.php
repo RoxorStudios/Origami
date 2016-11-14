@@ -19,7 +19,7 @@ class CreateModulesTable extends Migration
             $table->string('name')->nullable();
             $table->string('identifier')->unique();
             $table->boolean('list')->default(false);
-            $table->json('options')->nullable();
+            $table->json('options');
             $table->boolean('only_admin')->default(false);
             $table->boolean('active')->default(true);
             $table->integer('sortable')->default(0);

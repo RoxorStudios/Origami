@@ -21,6 +21,8 @@ Route::group(['middleware' => ['web'], 'prefix' => 'origami'], function () {
 		Route::post('/entries/{module}/{entry}','EntriesController@updateEntry');
 		Route::get('/entries/{module}/{entry}/remove','EntriesController@remove');
 
+		Route::get('/entries/{module}/{entry}/{field}','EntriesController@submodule');
+
 		// Admin only routes
 		Route::group(['middleware' => ['origami_admin']], function () {
 			Route::get('/users','UsersController@index');

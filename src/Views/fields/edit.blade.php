@@ -23,6 +23,7 @@
 							@include('origami::fields.partials.type', ['type'=>'checkbox'])
 							@include('origami::fields.partials.type', ['type'=>'select'])
 							@include('origami::fields.partials.type', ['type'=>'image'])
+							@include('origami::fields.partials.type', ['type'=>'module'])
 						</div>
 						@else
 						<div class="m-b-3">@include('origami::fields.partials.type', ['type'=>$field->type])</div>
@@ -36,7 +37,7 @@
 						</div>
 					</div>
 					<div class="col-m-12">
-						<div class="form-group" v-if="field.type=='text' || field.type=='textarea'">
+						<div class="form-group" v-if="field.type=='text' || field.type=='textarea' || field.type=='module'">
 							<label>Description<small>Fill in if you want to show some more information.</small></label>
 							<input type="text" name="description" v-model="field.description" class="form-input">
 						</div>
@@ -199,7 +200,50 @@
 								</div>
 							</div>
 
-							<div class="switch-checkbox" v-if="field.type!='checkbox' && field.type!='image' && field.type!='select' && field.type!='module' && !field.default">
+							<div v-if="field.type=='date'">
+								<div class="switch-checkbox">
+									<label>
+										<input type="checkbox" name="options[date][datetime]" v-model="field.options.date.datetime" v-bind:value="1">
+										<div class="title">Add timepicker</div>
+										<div class="check">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="switch-checkbox">
+									<label>
+										<input type="checkbox" name="options[date][disallow_past]" v-model="field.options.date.disallow_past" v-bind:value="1">
+										<div class="title">Disallow dates in the past</div>
+										<div class="check">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								<div class="switch-checkbox">
+									<label>
+										<input type="checkbox" name="options[date][disallow_future]" v-model="field.options.date.disallow_future" v-bind:value="1">
+										<div class="title">Disallow dates in the future</div>
+										<div class="check">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+								
+							</div>
+
+							<div v-if="field.type=='module'">
+								<div class="switch-checkbox">
+									<label>
+										<input type="checkbox" name="options[module][sortable]" v-model="field.options.module.sortable" v-bind:value="1">
+										<div class="title">Sortable</div>
+										<div class="check">
+											<div class="handle"></div>
+										</div>
+									</label>
+								</div>
+							</div>
+
+							<div class="switch-checkbox" v-if="field.type!='checkbox' && field.type!='image' && field.type!='select' && field.type!='module' && field.type!='module' && !field.default">
 								<label>
 									<input type="checkbox" name="required" v-model="field.required" v-bind:value="1">
 									<div class="title">Required</div>
@@ -257,6 +301,14 @@
 					height: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['height']) ? origami_form($field, 'options')['image']['thumbnail']['height'] : 500 }},
 					crop: {{ !empty(origami_form($field, 'options')['image']['thumbnail']['crop']) ? origami_boolToInt(origami_form($field, 'options')['image']['thumbnail']['crop']) : 0 }},
 				},
+			},
+			date: {
+				datetime: {{ !empty(origami_form($field, 'options')['date']['datetime']) ? origami_form($field, 'options')['date']['datetime'] : 0 }},
+				disallow_past: {{ !empty(origami_form($field, 'options')['date']['disallow_past']) ? origami_form($field, 'options')['date']['disallow_past'] : 0 }},
+				disallow_future: {{ !empty(origami_form($field, 'options')['date']['disallow_future']) ? origami_form($field, 'options')['date']['disallow_future'] : 0 }},
+			},
+			module: {
+				sortable: {{ !empty(origami_form($field, 'options')['module']['sortable']) ? origami_form($field, 'options')['module']['sortable'] : 0 }},
 			},
 		},
 	}

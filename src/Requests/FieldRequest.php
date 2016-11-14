@@ -29,7 +29,7 @@ class FieldRequest extends FormRequest
 
         $rules = [
             'name' => ['required', Rule::unique('origami_fields')->where(function ($query) use ($module_id) { $query->where('module_id', $module_id); })->ignore($field_id)],
-            'type' => 'required|in:text,textarea,checkbox,image,select,module',
+            'type' => 'required|in:text,textarea,checkbox,image,select,date,module',
             'options.image.width' => 'sometimes|required|integer|min:10|max:5000',
             'options.image.height' => 'sometimes|required|integer|min:10|max:5000',
         ];
