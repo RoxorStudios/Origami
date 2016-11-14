@@ -1,6 +1,5 @@
 {
     "name": "roxorstudios/origami",
-    "version": "0.2.0",
     "description": "Origami CMS",
     "keywords": ["origami", "cms", "laravel"],
     "license": "MIT",
