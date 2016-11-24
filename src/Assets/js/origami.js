@@ -91,6 +91,11 @@ app = new Vue({
 			});
 		},
 
+		addEntryToSubmodule: function(uid) {
+			$("input[name='addEntry']").val(uid);
+			$('#editEntry').submit();
+		},
+
 		origami_path(path) {
 			return origami.path+path;
 		},
@@ -98,7 +103,6 @@ app = new Vue({
 		origami_url(url) {
 			return origami.url+url;
 		},
-
 
 		field_select_add_option: function() {
 			app.field.options.select.options.push({
@@ -115,7 +119,6 @@ app = new Vue({
 				axis: "y",
 			});
 		},
-
 
 	},
 	watch: {
@@ -184,4 +187,9 @@ $(document).on('click','.remove-image', function() {
 	$(this).closest('li').remove();
 });
 
-var simplemde = new SimpleMDE({ element: document.getElementById("markdown") });
+$('textarea.markdown').each(function() {
+    var simplemde = new SimpleMDE({
+        element: this,
+    });
+    simplemde.render(); 
+})

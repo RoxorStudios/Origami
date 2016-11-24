@@ -38,6 +38,7 @@ class FieldsController extends Controller
         $request->merge(['default'=>$request->input('default') ? true : false]);
         $request->merge(['required'=>$request->input('required') ? true : false]);
         $request->merge(['options'=>$this->parseOptions($request)]);
+
         $field = $module->fields()->create($request->input());
 
         return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', 'Field created');

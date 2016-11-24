@@ -4,12 +4,6 @@ namespace Origami\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use Auth;
-use Origami\Models\User;
-use Origami\Models\Module;
-use Origami\Models\Image;
-use Origami\Models\Settings;
-
 class OrigamiServiceProvider extends ServiceProvider
 {
     /**
@@ -19,14 +13,15 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->initCustomGuard();
-        $this->initMigrations();
-        $this->initRoutes();
-        $this->initViews();
-        $this->initPublications();
-        $this->initModelBindings();
-        $this->initVersionControl();
-        $this->initHousekeeping();
+        $this->app->register('Origami\Providers\GuardServiceProvider');
+        $this->app->register('Origami\Providers\ViewServiceProvider');
+        $this->app->register('Origami\Providers\RouteServiceProvider');
+        $this->app->register('Origami\Providers\ConsoleServiceProvider');
+        $this->app->register('Origami\Providers\FacadeServiceProvider');
+        $this->app->register('Origami\Providers\MiddlewareServiceProvider');
+        $this->app->register('Origami\Providers\ModelBindingServiceProvider');
+        $this->app->register('Origami\Providers\MigrationServiceProvider');
+        $this->app->register('Origami\Providers\PublishServiceProvider');
     }
 
     /**
@@ -36,186 +31,9 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->initConsole();
-        $this->initMiddleware();
-        $this->initFacades();
+        
     }
 
-    /**
-     * Init custom guard
-     */
-    private function initCustomGuard()
-    {
-        config(['auth.guards' => array_merge(
-            config('auth.guards'),
-            [
-                'origami'=> [
-                    'driver' => 'session',
-                    'provider' =>'origami_users',
-                ]
-            ])
-        ]);
-
-        config(['auth.providers' => array_merge(
-            config('auth.providers'),
-            [
-                'origami_users' => [
-                    'driver' => 'eloquent',
-                    'model' => User::class,
-                ]
-            ])
-        ]);
-    }
-
-    /**
-     * Init migrations
-     */
-    private function initMigrations()
-    {
-        $this->loadMigrationsFrom(__DIR__.'/../Migrations');
-    }
-
-    /**
-     * Init routes
-     */
-    private function initRoutes()
-    {
-        $this->app->router->group(['namespace' => 'Origami\Controllers'], function(){
-            if (! $this->app->routesAreCached()) {
-                require __DIR__.'/../Routes/web.php';
-            }
-        });
-    }
-
-    /**
-     * Init migrations
-     */
-    private function initViews()
-    {
-        $this->loadViewsFrom(__DIR__.'/../Views', 'origami');
-
-        view()->composer('*', function($view) {
-            $view->withMe(Auth::guard('origami')->user());
-        });
-        view()->composer('origami::layouts.master', function($view){
-            $view->withModules(Module::accessible()->whereDoesntHave('field')->orderBy('position', 'asc')->get(['uid','name']));
-            if(Auth::guard('origami')->user()->admin)
-                $view->withCounters([
-                    'users' => User::count(),
-                    'modules' => Module::count(),
-                ]);
-        });
-    }
-
-    /**
-     * Init publications
-     */
-    private function initPublications()
-    {
-        $this->publishes([
-            __DIR__.'/../Assets/compiled' => public_path('vendor/origami'),
-            __DIR__.'/../Assets/images' => public_path('vendor/origami/images'),
-        ], 'public');
-    }
-
-    /**
-     * Init console
-     */
-    private function initConsole()
-    {
-        $this->commands([
-            \Origami\Console\InstallCMS::class,
-        ]);
-    }
-
-    /**
-     * Init middleware
-     */
-    private function initMiddleware()
-    {
-        $this->app['router']->middleware('origami_auth', 'Origami\Middleware\Authentication');
-        $this->app['router']->middleware('origami_lastseen', 'Origami\Middleware\Lastseen');
-        $this->app['router']->middleware('origami_admin', 'Origami\Middleware\Admin');
-    }
-
-    /**
-     * Init version control
-     */
-    private function initVersionControl()
-    {
-        try {
-            $installed = Settings::get('version');
-            if($installed!=origami_version()) {
-                
-            }
-        } catch (\Exception $e) {
-            
-        }
-    }
-
-    /**
-     * Init Facades
-     */
-    private function initFacades()
-    {
-        $this->app->bind('origami', function() { return new \Origami\Api\Origami; });
-    }
-
-    /**
-     * Init housekeeping
-     */
-    private function initHousekeeping()
-    {
-        try {
-            Image::cleanup();
-        } catch(\Exception $e) {
-
-        }
-    }
-
-        /**
-     * Init model bindings
-     */
-    private function initModelBindings()
-    {
-        $this->bindModel('user', 'users');
-        $this->bindAccessibleModel('module', 'modules');
-        $this->bindModel('field', 'modules');
-        $this->bindModel('entry', 'modules');
-
-        $this->app['router']->bind('Submodule', function ($value) {
-            dd('ok');
-            dd(Field::where('uid',$value)->first());
-           
-        });
-    }
-
-    /**
-     * Bind model
-     */
-    private function bindModel($type, $fallbackUrl)
-    {
-        $this->app['router']->bind($type, function ($value) use ($type, $fallbackUrl) {
-            $model = '\Origami\\Models\\'.ucfirst($type);
-            $eloquent = new $model;
-            if(!$instance = $eloquent->where('uid', $value)->first() ? : null) redirect(origami_url('/'.$fallbackUrl))->send();
-            return $instance ;
-        });
-    }
-
-    /**
-     * Bind model with accessible scope
-     */
-    private function bindAccessibleModel($type, $fallbackUrl)
-    {
-       
-        $this->app['router']->bind($type, function ($value) use ($type, $fallbackUrl) {
-            $model = '\Origami\\Models\\'.ucfirst($type);
-            $eloquent = new $model;
-            if(!$instance = $eloquent->where('uid', $value)->accessible()->first() ? : null) redirect(origami_url('/'.$fallbackUrl))->send();
-            return $instance ;
-        });
-    }
 
     
 }

@@ -67,6 +67,8 @@ class EntriesController extends Controller
             $this->parseData($data);
     	}
 
+        if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
+
     	return redirect(origami_path('/entries/'.$module->uid))->with('status', $module->list ? 'Entry created' : 'Changes saved');
     }
 
@@ -110,14 +112,14 @@ class EntriesController extends Controller
         foreach($module->fields as $field) {
             $data = $entry->data()->where('field_id',$field->id)->first() ? : new Data;
             if(!$request->input($field->identifier) && !$field->type=='checkbox') {
-                $data->delete();
-                continue;
+                $data->delete(); continue;
             }
             $data->field_id = $field->id;
             $data->value = $request->input($field->identifier);
             $data = $entry->data()->save($data);
             $this->parseData($data);
         }
+        
         if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
 
         return redirect(origami_path('/entries/'.$module->uid))->with('status', $module->list ? 'Entry edited' : 'Changes saved');
@@ -133,12 +135,11 @@ class EntriesController extends Controller
     }
 
     /**
-     * new entry in a submodule
+     * New entry in a submodule
      */
     public function submodule(Module $module, Entry $entry, Field $field)
     {
-
-        return view('origami::entries.edit')->withModule($field->submodule)->withEntry(new Entry)->withFields($field->submodule->fields);
+        return view('origami::entries.edit')->withModule($field->submodule)->withEntry(new Entry)->withFields($field->submodule->fields)->withParent($entry);
     }
 
 

@@ -1,0 +1,48 @@
+.welcome
+{
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+
+
+	.middle
+	{
+		position: relative;
+		display: inline-block;
+  		top: 50%;
+  		transform: translateY(-50%);
+
+  		.logo
+  		{
+  			margin: 0 0 30px;
+
+  			img
+  			{
+				height: 40px;
+  			}
+  		}
+		
+
+		.code
+		{
+			display: inline-block;
+			background: $origami-theme-light;
+			color: $origami-font-color-semilight;
+			padding: 10px 12px;
+			border-radius: 3px;
+			font-family: "Lucida Console", Monaco, monospace;
+			font-size: 11px;
+		}
+	}
+
+	.version
+	{
+		position: fixed;
+		right: 15px;
+		bottom: 15px;
+		font-size: 13px;
+		color: $origami-font-color-semilight;
+	}
+}
