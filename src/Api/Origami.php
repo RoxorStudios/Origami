@@ -144,9 +144,7 @@ class Origami
                     }
                     break;
                 case 'module':
-                   // $output[$data->field->identifier] = $data->id;
-                    //$output[$data->field->identifier] = Entry::where('data_id',$data->id)->get();
-                    $output[$data->field->identifier] = $this->module($data->field->identifier)->filterSubmoduleEntries($data)->get();
+                    $output[$data->field->identifier] = $this->module($data->field->submodule->identifier)->filterSubmoduleEntries($data)->get();
                     break;
                 default:
                     $output[$data->field->identifier] = $data->value;

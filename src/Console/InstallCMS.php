@@ -48,7 +48,7 @@ class InstallCMS extends Command
 
         $this->checkInstallation();
         $this->callSilent('storage:link');     
-        $this->callSilent('vendor:publish');
+        $this->callSilent('vendor:publish', ['--force' => true]);
 
         $this->info('Welcome to the Origami CMS');
         sleep($pause);
