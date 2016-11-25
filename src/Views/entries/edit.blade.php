@@ -7,15 +7,23 @@
 		<div class="padding">
 			<div class="actions">
 				@if($module->list)
-				<a href="{{ origami_url('/entries/'.$module->uid) }}" class="button button-action button-gray">Cancel</a>
+					@if($entry->parent)
+					<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}" class="button button-action button-gray">Cancel</a>
+					@else
+					<a href="{{ origami_url('/entries/'.$module->uid) }}" class="button button-action button-gray">Cancel</a>
+					@endif
 				@endif
 			</div>
 		
 			<h1 class="boxtitle">
 				@if(!empty($parent))
-
 				<a href="{{ origami_url('/entries/'.$parent->module->uid.'/'.$parent->uid) }}">{{ $parent->getDefaultFieldValueAttribute() }}</a> >
 				@endif
+
+				@if($entry->parent)
+				<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}">{{ $entry->parent->entry->getDefaultFieldValueAttribute() }}</a> >
+				@endif
+
 				{{ isset($single) ? $module->name : ($entry->id ? 'Edit entry' : 'New entry') }}
 			</h1>
 			@if($module->fields()->count())
@@ -29,7 +37,7 @@
 					@endforeach
 
 					@if(!empty($parent))
-						<input type="text" name="parent" value="{{ $parent->uid }}">
+						<input type="hidden" name="parent" value="{{ $parent->uid }}">
 					@endif
 
 					<button type="submit" class="button m-t-4">{{ isset($single) ? 'Save' : ($entry->id ? 'Update' : 'Create') }}</button>

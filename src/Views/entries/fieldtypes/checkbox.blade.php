@@ -2,7 +2,7 @@
 	<div class="col-m-12">
 		<div class="form-group">
 			
-			<div class="switch-checkbox">
+			<div class="switch-checkbox m-b-6">
 				<label>
 					<input type="checkbox" name="{{ $field->identifier }}" @if($entry->fetchCheckboxStateWithField($field)) checked @endif v-bind:value="1">
 					<div class="title">{{ $field->name }}</div>

@@ -15,28 +15,7 @@
 			@if($module->fields()->count())
 				@if($module->list)
 					@if($entries->count())
-						<table class="table clickable sort-entries">
-							<thead>
-								<tr>
-									<th>{{ $module->defaultField }}</th>
-									@if($module->list && $entries->count()>1 && $module->sortable)
-									<th></th>
-									@endif
-									<th>Created</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($entries as $entry)
-								<tr data-uid="{{ $entry->uid }}" onclick="window.location.href='{{ origami_url('/entries/'.$module->uid.'/'.$entry->uid) }}'">
-									@if($module->list && $entries->count()>1 && $module->sortable)
-									<td width="25" class="l reorder only-desktop"><i class="fa fa-reorder"></i></td>
-									@endif
-									<td>{{ $entry->defaultFieldValue }}</td>
-									<td>{{ origami_diff($entry->created_at) }}</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
+						@include('origami::entries.partials.entries_table',['module'=>$module,'entries'=>$entries])
 					@else
 						<div class="no-items">
 							<svg class="icon"><use xlink:href="#icon-love"/></use></svg>

@@ -22,18 +22,14 @@ class EntriesController extends Controller
      */
     public function index(Module $module)
     {
-        if($module->list) {
-            return view('origami::entries.index')
-                ->withModule($module)
-                ->withEntries($module->entries)
-                ->withFields($module->fields);
-        } else {
-            return view('origami::entries.edit')
-                ->withModule($module)
-                ->withFields($module->fields)
-                ->withEntry($module->entries()->first() ?: new Entry)
-                ->withSingle(true);
-        }
+        // Check if this list belongs to a parent field
+        if($module->list && $module->field) return redirect(origami_path('/entries/'.$module->field->module->uid));
+
+        // Check if it is a list
+        if($module->list) return view('origami::entries.index')->withModule($module)->withEntries($module->entries)->withFields($module->fields);
+        
+        // Default
+        return view('origami::entries.edit')->withModule($module)->withFields($module->fields)->withEntry($module->entries()->first() ?: new Entry)->withSingle(true);
     }
 
     /**
@@ -42,13 +38,9 @@ class EntriesController extends Controller
     public function create(Module $module)
     {
     	// Check if it is a list
-    	if(!$module->list)
-    		return redirect(origami_path('/entries/'.$module->uid));
+    	if(!$module->list) return redirect(origami_path('/entries/'.$module->uid));
 
-    	return view('origami::entries.edit')
-            ->withModule($module)
-            ->withFields($module->fields()->orderBy('position','ASC')->get())
-            ->withEntry(new Entry);
+    	return view('origami::entries.edit')->withModule($module)->withFields($module->fields()->orderBy('position','ASC')->get())->withEntry(new Entry);
     }
 
     /**
@@ -58,18 +50,15 @@ class EntriesController extends Controller
     {
     	$entry = $module->entries()->save(new Entry);
 
+        // Attach to parent
+        if($request->input('parent')) $entry->attachToParent($request->input('parent'));
+
     	foreach($module->fields as $field) {
     		if(!$request->input($field->identifier) && !$field->type=='checkbox') continue;
-    		$data = new Data;
-    		$data->field_id = $field->id;
-    		$data->value = $request->input($field->identifier);
-    		$data = $entry->data()->save($data);
-            $this->parseData($data);
+            $this->parseData($this->fetchData($request, $entry, new Data, $field));
     	}
 
-        if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
-
-    	return redirect(origami_path('/entries/'.$module->uid))->with('status', $module->list ? 'Entry created' : 'Changes saved');
+        return $this->redirectToTarget($request, $entry);
     }
 
     /**
@@ -79,7 +68,7 @@ class EntriesController extends Controller
     {
         $i=1;
         foreach($request->input('entries') as $entry_uid) {
-            $module->entries()->where('uid', $entry_uid)->update(['position' => $i]);
+            Entry::where('uid', $entry_uid)->update(['position' => $i]);
             $i++;
         }
     }
@@ -114,15 +103,10 @@ class EntriesController extends Controller
             if(!$request->input($field->identifier) && !$field->type=='checkbox') {
                 $data->delete(); continue;
             }
-            $data->field_id = $field->id;
-            $data->value = $request->input($field->identifier);
-            $data = $entry->data()->save($data);
-            $this->parseData($data);
+            $this->parseData($this->fetchData($request, $entry, $data, $field));
         }
         
-        if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
-
-        return redirect(origami_path('/entries/'.$module->uid))->with('status', $module->list ? 'Entry edited' : 'Changes saved');
+        return $this->redirectToTarget($request, $entry);
     }
 
     /**
@@ -142,6 +126,16 @@ class EntriesController extends Controller
         return view('origami::entries.edit')->withModule($field->submodule)->withEntry(new Entry)->withFields($field->submodule->fields)->withParent($entry);
     }
 
+    /**
+     * Fetch data
+     */
+    private function fetchData(Request $request, Entry $entry, Data $data, Field $field)
+    {
+        $data->field_id = $field->id;
+        $data->value = $request->input($field->identifier);
+        $data = $entry->data()->save($data);
+        return $data;
+    }
 
     /**
      * Parse value
@@ -171,6 +165,22 @@ class EntriesController extends Controller
         }
 
         return;
+    }
+
+    /**
+     * Get redirect path
+     */
+    private function redirectToTarget(Request $request, Entry $entry)
+    {
+        // Check if we need to add a value to a submodule
+        if($request->input('addEntry')) return redirect($this->linkToSubmodule($entry, $request->input('addEntry')));
+
+        // Check if we need to redirect from a submodule
+        if($entry->parent)
+            return redirect(origami_path('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid))->with('status', 'Entry saved');
+        
+        // Normal redirect back to the module
+        return redirect(origami_path('/entries/'.$entry->module->uid))->with('status', $entry->module->list ? ($entry->wasRecentlyCreated ? 'Entry created' : 'Entry saved') : 'Changes saved');
     }
 
     /**

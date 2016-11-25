@@ -5,6 +5,7 @@ namespace Origami\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Origami\Models\Field;
+use Origami\Models\Entry;
 
 class Entry extends Model
 {
@@ -24,6 +25,16 @@ class Entry extends Model
         if(!$this->position) $this->position = $this->module->entries()->max('position') + 1;
         parent::save($options);
         return $this;
+    }
+
+    /**
+     * Match Parent
+     */
+    public function attachToParent($uid)
+    {
+        $parent = Entry::where('uid', $uid)->first()->data()->where('field_id', $this->module->field->id)->first()->id;
+        $this->data_id = $parent;
+        $this->save();
     }
 
     /**
@@ -78,6 +89,14 @@ class Entry extends Model
         return $data ? ($data->images()->count() ? implode(',',$data->images->pluck('uid')->toArray()) : '') : '';
     }
 
+    /**
+     * Get submodule entries
+     */
+    public function submoduleEntries(Field $field)
+    {
+        $data = $this->data()->where('field_id',$field->id)->first();
+        if($data) return $data->field->submodule->entries()->where('data_id',$data->id)->get();
+    }
 
     /**
      * Belongs to a module
@@ -93,6 +112,14 @@ class Entry extends Model
     public function data()
     {
         return $this->hasMany('Origami\Models\Data');
+    }
+
+    /**
+     * Belongs to a parent data field
+     */
+    public function parent()
+    {
+        return $this->belongsTo('Origami\Models\Data', 'data_id');
     }
 
 }

@@ -143,6 +143,11 @@ class Origami
                         $output[$data->field->identifier] = $parser->parse($data->value);
                     }
                     break;
+                case 'module':
+                   // $output[$data->field->identifier] = $data->id;
+                    //$output[$data->field->identifier] = Entry::where('data_id',$data->id)->get();
+                    $output[$data->field->identifier] = $this->module($data->field->identifier)->filterSubmoduleEntries($data)->get();
+                    break;
                 default:
                     $output[$data->field->identifier] = $data->value;
                     break;
@@ -167,6 +172,13 @@ class Origami
     	return !empty($output) ? $output : collect();
     }
 
-
-
+    /**
+     * [filterSubmoduleEntries description]
+     * @return [type] [description]
+     */
+    private function filterSubmoduleEntries(Data $data)
+    {
+        $this->builder->where('data_id',$data->id);
+        return $this;
+    }
 }

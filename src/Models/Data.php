@@ -31,4 +31,12 @@ class Data extends Model
         return $this->hasMany('Origami\Models\Image')->orderBy('position', 'ASC');
     }
 
+    /**
+     * Belongs to an entry
+     */
+    public function entry()
+    {
+        return $this->belongsTo('Origami\Models\Entry');
+    }
+
 }

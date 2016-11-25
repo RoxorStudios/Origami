@@ -23,8 +23,11 @@
 							@include('origami::fields.partials.type', ['type'=>'checkbox'])
 							@include('origami::fields.partials.type', ['type'=>'select'])
 							@include('origami::fields.partials.type', ['type'=>'image'])
-							@include('origami::fields.partials.type', ['type'=>'date'])
-							@include('origami::fields.partials.type', ['type'=>'module'])
+							{{-- @include('origami::fields.partials.type', ['type'=>'date']) --}}
+							
+							@if(!$module->field)
+								@include('origami::fields.partials.type', ['type'=>'module'])
+							@endif
 						</div>
 						@else
 						<div class="m-b-3">@include('origami::fields.partials.type', ['type'=>$field->type])</div>
