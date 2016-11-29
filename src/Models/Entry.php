@@ -77,7 +77,7 @@ class Entry extends Model
     public function fetchImagesWithField(Field $field)
     {
         $data = $this->data()->where('field_id',$field->id)->first();
-        return $data ? ($data->images()->count() ? $data->images : []) : [];
+        return $data ? ($data->images()->count() ? $data->images()->orderBy('position','ASC')->get() : []) : [];
     }
 
     /**

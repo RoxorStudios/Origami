@@ -14,8 +14,8 @@
 			@include('origami::partials.messages')
 			@if($module->fields()->count())
 				@if($module->list)
-					@if($entries->count())
-						@include('origami::entries.partials.entries_table',['module'=>$module,'entries'=>$entries])
+					@if($module->entries()->count())
+						@include('origami::entries.partials.entries_table', ['module'=>$module, 'entries'=>$module->entries()->orderBy('position','ASC')->orderBy('id','DESC')->get()])
 					@else
 						<div class="no-items">
 							<svg class="icon"><use xlink:href="#icon-love"/></use></svg>

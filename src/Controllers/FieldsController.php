@@ -19,7 +19,7 @@ class FieldsController extends Controller
      */
     public function index(Module $module)
     {
-        return view('origami::fields.index')->withModule($module)->withFields($module->fields);
+        return view('origami::fields.index')->withModule($module)->withFields($module->fields()->orderBy('position','ASC')->orderBy('id','DESC')->get());
     }
 
     /**

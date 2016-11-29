@@ -86,7 +86,7 @@ class Module extends Model
      */
     public function fields()
     {
-        return $this->hasMany('Origami\Models\Field')->orderBy('position','ASC')->orderBy('id','DESC');
+        return $this->hasMany('Origami\Models\Field');
     }
 
     /**
@@ -94,7 +94,7 @@ class Module extends Model
      */
     public function entries()
     {
-        return $this->hasMany('Origami\Models\Entry')->orderBy('position','ASC')->orderBy('id','DESC');
+        return $this->hasMany('Origami\Models\Entry');
     }
 
     /**

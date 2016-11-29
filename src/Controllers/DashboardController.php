@@ -20,7 +20,7 @@ class DashboardController extends Controller
     {
     	return view('origami::dashboard')
     		->withModules(Module::with(['entries' => function($query) {
-    			$query->orderBy('position','ASC')->limit(5);
+    			$query->orderBy('position','ASC')->orderBy('id','ASC')->limit(5);
     		}])->where('dashboard', true)->get());
     }
 

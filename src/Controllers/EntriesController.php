@@ -26,10 +26,10 @@ class EntriesController extends Controller
         if($module->list && $module->field) return redirect(origami_path('/entries/'.$module->field->module->uid));
 
         // Check if it is a list
-        if($module->list) return view('origami::entries.index')->withModule($module)->withEntries($module->entries)->withFields($module->fields);
-        
+        if($module->list) return view('origami::entries.index')->withModule($module);
+
         // Default
-        return view('origami::entries.edit')->withModule($module)->withFields($module->fields)->withEntry($module->entries()->first() ?: new Entry)->withSingle(true);
+        return view('origami::entries.edit')->withModule($module)->withFields($module->fields()->orderBy('position','ASC')->get())->withEntry($module->entries()->first() ?: new Entry)->withSingle(true);
     }
 
     /**
