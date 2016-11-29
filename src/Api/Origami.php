@@ -114,7 +114,7 @@ class Origami
      */
     public function get()
     {
-    	foreach($this->builder->with('data', 'data.field')->get() as $entry)
+    	foreach($this->builder->orderBy('position','ASC')->with('data', 'data.field')->get() as $entry)
     		$output[] = [
     			'uid' => $entry->uid,
     			'created_at' => $entry->created_at,
