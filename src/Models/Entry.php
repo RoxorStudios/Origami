@@ -9,7 +9,7 @@ use Origami\Models\Entry;
 
 class Entry extends Model
 {
-	
+
     public $table = 'origami_entries';
 
     protected $fillable = [
@@ -50,7 +50,7 @@ class Entry extends Model
     }
 
     /**
-     * Fetch value for entry with given 
+     * Fetch value for entry with given
      */
     public function fetchDataValueWithField(Field $field)
     {

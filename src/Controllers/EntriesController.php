@@ -16,7 +16,7 @@ use Origami\Requests\EntryRequest;
 
 class EntriesController extends Controller
 {
-    	
+
     /**
      * Index
      */
@@ -80,7 +80,7 @@ class EntriesController extends Controller
     {
         if (!$request->file('origami-image')->isValid())
             return false;
-        
+
         $field = $module->fields()->where('identifier', $request->input('field'))->first();
         return Image::saveImageForField($field, $request->file('origami-image'));
     }
@@ -105,7 +105,7 @@ class EntriesController extends Controller
             }
             $this->parseData($this->fetchData($request, $entry, $data, $field));
         }
-        
+
         return $this->redirectToTarget($request, $entry);
     }
 
@@ -145,7 +145,7 @@ class EntriesController extends Controller
         switch ($data->field->type)
         {
             case 'image':
-                if(!empty($data->field['options']['image']['multiple'])){
+                if(!empty($data->field['options']['image'])){
                     $position=0;
                     Image::where('data_id',$data->id)->update(['data_id'=>null]);
                     foreach(explode(",", trim($data->value,',')) as $image) {
@@ -178,7 +178,7 @@ class EntriesController extends Controller
         // Check if we need to redirect from a submodule
         if($entry->parent)
             return redirect(origami_path('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid))->with('status', 'Entry saved');
-        
+
         // Normal redirect back to the module
         return redirect(origami_path('/entries/'.$entry->module->uid))->with('status', $entry->module->list ? ($entry->wasRecentlyCreated ? 'Entry created' : 'Entry saved') : 'Changes saved');
     }
