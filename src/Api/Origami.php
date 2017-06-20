@@ -160,7 +160,7 @@ class Origami
      */
     private function bindImages(Data $data)
     {
-    	foreach($data->images as $image)
+    	foreach($data->images()->orderBy('position', 'ASC')->get() as $image)
     		$output[] = [
     			'filename' => preg_replace('/\\.[^.\\s]{3,4}$/', '', $image->filename),
     			'image' => origami_content_url($image->path),
