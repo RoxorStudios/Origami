@@ -28,7 +28,7 @@ class Data extends Model
      */
     public function images()
     {
-        return $this->hasMany('Origami\Models\Image');
+        return $this->hasMany('Origami\Models\Image')->orderBy('position', 'ASC');
     }
 
     /**
