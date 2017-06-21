@@ -42,11 +42,12 @@ class Entry extends Model
      */
     public function getDefaultFieldValueAttribute()
     {
-        $field = $this->module->fields()->whereIn('type',['text','textarea'])->orderBy('default','DESC')->orderBy('position','ASC')->first();
-        if(!$field) return $this->uid;
+        $field = $this->module->fields()->whereIn('type',['text', 'textarea'])->orderBy('default','DESC')->orderBy('position','ASC')->first();
+        if(!$field) return !empty($this->module->name) ? $this->module->name : $this->uid;
         if(!$this->data()->where('field_id',$field->id)->exists()) return '-';
+        $value = $this->data()->where('field_id',$field->id)->first()->value;
 
-        return $this->data()->where('field_id',$field->id)->first()->value;
+        return empty($value) || strlen($value) > 100 ? $this->module->name : $value;
     }
 
     /**

@@ -8,20 +8,33 @@
 			<div class="actions">
 				@if($module->list)
 					@if($entry->parent)
-					<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}" class="button button-action button-gray">Cancel</a>
+						@if($entry->parent->entry->module->isRootModule())
+						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid) }}" class="button button-action button-gray">Cancel</a>
+						@else
+						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}" class="button button-action button-gray">Cancel</a>
+						@endif
 					@else
 					<a href="{{ origami_url('/entries/'.$module->uid) }}" class="button button-action button-gray">Cancel</a>
 					@endif
 				@endif
 			</div>
-		
+
 			<h1 class="boxtitle">
 				@if(!empty($parent))
-				<a href="{{ origami_url('/entries/'.$parent->module->uid.'/'.$parent->uid) }}">{{ $parent->getDefaultFieldValueAttribute() }}</a> >
+					@if($parent->module->isRootModule())
+					<a href="{{ origami_url('/entries/'.$parent->module->uid) }}">{{ $parent->getDefaultFieldValueAttribute() }}</a> >
+					@else
+					<a href="{{ origami_url('/entries/'.$parent->module->uid.'/'.$parent->uid) }}">{{ $parent->getDefaultFieldValueAttribute() }}</a> >
+					@endif
 				@endif
 
 				@if($entry->parent)
-				<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}">{{ $entry->parent->entry->getDefaultFieldValueAttribute() }}</a> >
+
+					@if($entry->parent->entry->module->isRootModule())
+					<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid) }}">{{ $entry->parent->entry->getDefaultFieldValueAttribute() }}</a> >
+					@else
+					<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}">{{ $entry->parent->entry->getDefaultFieldValueAttribute() }}</a> >
+					@endif
 				@endif
 
 				{{ isset($single) ? $module->name : ($entry->id ? 'Edit entry' : 'New entry') }}

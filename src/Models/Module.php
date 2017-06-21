@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-	
+
     public $table = 'origami_modules';
 
     protected $fillable = [
@@ -40,7 +40,7 @@ class Module extends Model
     {
         $field = $this->fields()->whereIn('type',['text','textarea'])->orderBy('default','DESC')->orderBy('position','ASC')->first();
         if(!$field) return 'UID';
-        
+
         return $field->name;
     }
 
@@ -112,5 +112,13 @@ class Module extends Model
     {
         return $this->hasManyThrough('Origami\Models\Module', 'Origami\Models\Field');
     }
+
+	/**
+	 * Is module the root module
+	 */
+	public function isRootModule()
+	{
+		return is_null($this->field_id) && !$this->list;
+	}
 
 }

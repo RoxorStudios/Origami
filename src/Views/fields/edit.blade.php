@@ -24,10 +24,7 @@
 							@include('origami::fields.partials.type', ['type'=>'select'])
 							@include('origami::fields.partials.type', ['type'=>'image'])
 							{{-- @include('origami::fields.partials.type', ['type'=>'date']) --}}
-							
-							@if(!$module->field)
-								@include('origami::fields.partials.type', ['type'=>'module'])
-							@endif
+							@include('origami::fields.partials.type', ['type'=>'module'])
 						</div>
 						@else
 						<div class="m-b-3">@include('origami::fields.partials.type', ['type'=>$field->type])</div>
@@ -79,7 +76,7 @@
 									</div>
 								</label>
 							</div>
-							
+
 							<div v-if="field.type=='image'">
 								<div class="switch-checkbox" v-if="field.type=='image'">
 									<label>
@@ -169,7 +166,7 @@
 									</div>
 								</div>
 							</div>
-							
+
 							<div v-if="field.type=='select'">
 
 								<div class="form-group">
@@ -232,7 +229,7 @@
 										</div>
 									</label>
 								</div>
-								
+
 							</div>
 
 							<div v-if="field.type=='module'">
