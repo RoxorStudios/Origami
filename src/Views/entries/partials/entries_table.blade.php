@@ -1,7 +1,7 @@
 <table class="table clickable sort-entries">
 	<thead>
 		<tr>
-			@if($module->list && $entries->count()>1 && $module->sortable)
+			@if($entries->count() > 1 && $entries->first()->isSortable($entries))
 			<th colspan="2">{{ $module->defaultField }}</th>
 			@else
 			<th>{{ $module->defaultField }}</th>
@@ -12,7 +12,7 @@
 	<tbody>
 		@foreach($entries as $entry)
 		<tr data-uid="{{ $entry->uid }}" onclick="window.location.href='{{ origami_url('/entries/'.$entry->module->uid.'/'.$entry->uid) }}'">
-			@if($module->list && $entries->count()>1 && $module->sortable)
+			@if($entry->isSortable($entries))
 			<td width="25" class="l reorder only-desktop"><i class="fa fa-reorder"></i></td>
 			@endif
 			<td width="60%">{{ $entry->defaultFieldValue }}</td>

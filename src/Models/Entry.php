@@ -96,7 +96,7 @@ class Entry extends Model
     public function submoduleEntries(Field $field)
     {
         $data = $this->data()->where('field_id',$field->id)->first();
-        if($data) return $data->field->submodule->entries()->where('data_id',$data->id)->get();
+        if($data) return $data->field->submodule->entries()->where('data_id',$data->id)->orderBy('position', 'ASC')->get();
     }
 
     /**
@@ -121,6 +121,14 @@ class Entry extends Model
     public function parent()
     {
         return $this->belongsTo('Origami\Models\Data', 'data_id');
+    }
+
+    /**
+     * Check if entry is sortable
+     */
+    public function isSortable($entries)
+    {
+        return $this->module->list && $entries->count()>1 && $this->module->sortable;
     }
 
 }
