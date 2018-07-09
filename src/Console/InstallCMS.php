@@ -47,8 +47,8 @@ class InstallCMS extends Command
         $pause = 1;
 
         $this->checkInstallation();
-        $this->callSilent('storage:link');     
-        $this->callSilent('vendor:publish', ['--force' => true]);
+        $this->callSilent('storage:link');
+        $this->callSilent('vendor:publish', ['--force' => true, '--provider' => 'Origami\Providers\PublishServiceProvider']);
 
         $this->info('Welcome to the Origami CMS');
         sleep($pause);
@@ -129,7 +129,7 @@ class InstallCMS extends Command
                 die();
             }
         } catch (\Exception $e) {
-            
+
         }
     }
 

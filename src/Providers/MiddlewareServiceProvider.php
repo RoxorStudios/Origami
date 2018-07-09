@@ -2,6 +2,7 @@
 
 namespace Origami\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 class MiddlewareServiceProvider extends ServiceProvider
@@ -12,9 +13,9 @@ class MiddlewareServiceProvider extends ServiceProvider
      *
      * @return void
      */
-	public function boot()
+	public function boot(Router $router)
     {
-    	
+		//$router->middleware('origami_check_installation', 'Origami\Middleware\CheckInstallation');
     }
 
     /**
@@ -24,11 +25,21 @@ class MiddlewareServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['router']->middleware('origami_check_installation', 'Origami\Middleware\CheckInstallation');
-        $this->app['router']->middleware('origami_auth', 'Origami\Middleware\Authentication');
-        $this->app['router']->middleware('origami_lastseen', 'Origami\Middleware\Lastseen');
-        $this->app['router']->middleware('origami_admin', 'Origami\Middleware\Admin');
-        $this->app['router']->middleware('origami_cleanup', 'Origami\Middleware\Cleanup');
+		$this->registerMiddleware('origami_check_installation', 'Origami\Middleware\CheckInstallation');
+		$this->registerMiddleware('origami_auth', 'Origami\Middleware\Authentication');
+		$this->registerMiddleware('origami_lastseen', 'Origami\Middleware\Lastseen');
+		$this->registerMiddleware('origami_admin', 'Origami\Middleware\Admin');
+		$this->registerMiddleware('origami_cleanup', 'Origami\Middleware\Cleanup');
     }
+
+	/**
+	 * Register middleware
+	 *
+	 * @return void
+	 */
+	private function registerMiddleware($alias, $class)
+	{
+		return method_exists($this->app['router'], 'aliasMiddleware') ? $this->app['router']->aliasMiddleware($alias, $class) : $this->app['router']->middleware($alias, $class);
+	}
 
 }
