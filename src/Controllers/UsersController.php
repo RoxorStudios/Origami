@@ -12,7 +12,7 @@ use Origami\Requests\UserRequest;
 
 class UsersController extends Controller
 {
-    	
+
     /**
      * Index
      */
@@ -36,7 +36,7 @@ class UsersController extends Controller
     {
         $user = (new User)->create($request->input());
 
-        return redirect(origami_path('/users'))->with('status', 'New user created');
+        return redirect(origami_path('/users'))->with('status', trans('origami::message.user.created'));
     }
 
     /**
@@ -57,8 +57,8 @@ class UsersController extends Controller
         // Update password
         if($request->has('update_password'))
             $user->update(['password'=>$request->input('update_password')]);
-        
-        return redirect(origami_path('/users'))->with('status', 'Changes saved');
+
+        return redirect(origami_path('/users'))->with('status', trans('origami::message.changes_saved'));
     }
 
     /**
@@ -67,7 +67,7 @@ class UsersController extends Controller
     public function remove(User $user)
     {
         $user->delete();
-        return redirect(origami_path('/users'))->with('status', 'User removed');
+        return redirect(origami_path('/users'))->with('status', trans('origami::message.user.removed'));
     }
 
 }

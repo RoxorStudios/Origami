@@ -15,10 +15,10 @@
 			<a class="logo" href="{{ origami_url('/') }}"></a>
 			<div class="padding">
 				@if(count($modules))
-					<h6>Modules</h6>
+					<h6>@lang('origami::global.modules')</h6>
 					<ul class="menu">
 						@foreach($modules as $module)
-							
+
 							<li class="{{ origami_active('/entries/'.$module->uid.'*') }}">
 								<a href="{{ origami_url('/entries/'.$module->uid) }}">{{ $module->name }}
 									@if($module->entries->count())
@@ -26,20 +26,20 @@
 									@endif
 								</a>
 							</li>
-					
+
 						@endforeach
 					</ul>
 				@endif
 
 				@if($me->admin)
-				<h6>Admin area</h6>
+				<h6>@lang('origami::global.admin_area')</h6>
 				<ul class="menu">
 					<li class="{{ origami_active('/modules*') }}">
-						<a href="{{ origami_url('/modules') }}">Modules
+						<a href="{{ origami_url('/modules') }}">@lang('origami::global.modules')
 							@if($counters['modules'])<small>{{ $counters['modules'] }}</small>@endif
 						</a>
 					</li>
-					<li class="{{ origami_active('/users*') }}"><a href="{{ origami_url('/users') }}">Users<small>{{ $counters['users'] }}</small></a></li>
+					<li class="{{ origami_active('/users*') }}"><a href="{{ origami_url('/users') }}">@lang('origami::global.users')<small>{{ $counters['users'] }}</small></a></li>
 				</ul>
 				@endif
 				<ul class="icons">

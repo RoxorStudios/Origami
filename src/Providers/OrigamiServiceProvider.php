@@ -21,6 +21,7 @@ class OrigamiServiceProvider extends ServiceProvider
         $this->app->register('Origami\Providers\MiddlewareServiceProvider');
         $this->app->register('Origami\Providers\ModelBindingServiceProvider');
         $this->app->register('Origami\Providers\MigrationServiceProvider');
+        $this->app->register('Origami\Providers\TranslationServiceProvider');
         $this->app->register('Origami\Providers\PublishServiceProvider');
     }
 
@@ -31,9 +32,9 @@ class OrigamiServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
+
     }
 
 
-    
+
 }

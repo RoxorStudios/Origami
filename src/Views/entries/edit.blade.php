@@ -9,12 +9,12 @@
 				@if($module->list)
 					@if($entry->parent)
 						@if($entry->parent->entry->module->isRootModule())
-						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid) }}" class="button button-action button-gray">Cancel</a>
+						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid) }}" class="button button-action button-gray">@lang('origami::global.cancel')</a>
 						@else
-						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}" class="button button-action button-gray">Cancel</a>
+						<a href="{{ origami_url('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid) }}" class="button button-action button-gray">@lang('origami::global.cancel')</a>
 						@endif
 					@else
-					<a href="{{ origami_url('/entries/'.$module->uid) }}" class="button button-action button-gray">Cancel</a>
+					<a href="{{ origami_url('/entries/'.$module->uid) }}" class="button button-action button-gray">@lang('origami::global.cancel')</a>
 					@endif
 				@endif
 			</div>
@@ -37,7 +37,7 @@
 					@endif
 				@endif
 
-				{{ isset($single) ? $module->name : ($entry->id ? 'Edit entry' : 'New entry') }}
+				{{ isset($single) ? $module->name : ($entry->id ? trans('origami::entry.edit') : trans('origami::entry.new')) }}
 			</h1>
 			@if($module->fields()->count())
 				<form method="POST" id="editEntry" action="{{ !$entry->uid ? origami_url('/entries/'.$module->uid.'/create') : origami_url('/entries/'.$module->uid.'/'.$entry->uid) }}" enctype='multipart/form-data'>
@@ -53,9 +53,9 @@
 						<input type="hidden" name="parent" value="{{ $parent->uid }}">
 					@endif
 
-					<button type="submit" class="button m-t-4">{{ isset($single) ? 'Save' : ($entry->id ? 'Update' : 'Create') }}</button>
+					<button type="submit" class="button m-t-4">{{ isset($single) ? trans('origami::global.save') : ($entry->id ? trans('origami::global.update') : trans('origami::global.create')) }}</button>
 					@if($entry->id && $module->list)
-						<button type="button" class="button button-link" v-on:click="confirm('Are you absolutely sure you want to remove this entry?','{{ origami_url('/entries/'.$module->uid.'/'.$entry->uid.'/remove') }}')">Remove entry</button>
+						<button type="button" class="button button-link" v-on:click="confirm('{{ trans('origami::entry.info.remove') }}','{{ origami_url('/entries/'.$module->uid.'/'.$entry->uid.'/remove') }}')">@lang('origami::entry.remove')</button>
 					@endif
 				</form>
 			@else

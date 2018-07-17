@@ -13,7 +13,7 @@ use Origami\Requests\FieldRequest;
 
 class FieldsController extends Controller
 {
-    	
+
     /**
      * Index
      */
@@ -41,7 +41,7 @@ class FieldsController extends Controller
 
         $field = $module->fields()->create($request->input());
 
-        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', 'Field created');
+        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', trans('origami::message.field.created'));
     }
 
     /**
@@ -74,7 +74,7 @@ class FieldsController extends Controller
         $request->merge(['options'=>$this->parseOptions($request)]);
         $field->update($request->input());
 
-        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', 'Changes saved');
+        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', trans('origami::message.changes_saved'));
     }
 
     /**
@@ -83,7 +83,7 @@ class FieldsController extends Controller
     public function remove(Module $module, Field $field)
     {
         $field->delete();
-        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', 'Field removed');
+        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', trans('origami::message.field.removed'));
     }
 
     /**

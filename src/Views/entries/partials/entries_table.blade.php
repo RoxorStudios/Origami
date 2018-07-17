@@ -6,7 +6,7 @@
 			@else
 			<th>{{ $module->defaultField }}</th>
 			@endif
-			<th>Created</th>
+			<th>@lang('origami::global.created')</th>
 		</tr>
 	</thead>
 	<tbody>

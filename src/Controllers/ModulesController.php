@@ -12,7 +12,7 @@ use Origami\Requests\ModuleRequest;
 
 class ModulesController extends Controller
 {
-    	
+
     /**
      * Index
      */
@@ -66,7 +66,7 @@ class ModulesController extends Controller
     public function updateModule(ModuleRequest $request, Module $module)
     {
         $module->update($request->input());
-        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', 'Changes saved');
+        return redirect(origami_path('/modules/'.$module->uid.'/fields'))->with('status', trans('origami::message.changes_saved'));
     }
 
     /**
@@ -75,7 +75,7 @@ class ModulesController extends Controller
     public function remove(Module $module)
     {
         $module->delete();
-        return redirect(origami_path('/modules'))->with('status', 'Module removed');
+        return redirect(origami_path('/modules'))->with('status', trans('origami::message.module.removed'));
     }
 
 }

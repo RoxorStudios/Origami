@@ -6,26 +6,26 @@
 	<div class="box">
 		<div class="padding">
 			<div class="actions">
-				<a href="{{ $module->id ? origami_url('/modules/'.$module->uid.'/fields') : origami_url('/modules') }}" class="button button-action button-gray">Cancel</a>
+				<a href="{{ $module->id ? origami_url('/modules/'.$module->uid.'/fields') : origami_url('/modules') }}" class="button button-action button-gray">@lang('origami::global.cancel')</a>
 			</div>
-			<h1 class="boxtitle">{{ $module->id ? 'Edit module' : 'New module' }}</h1>
+			<h1 class="boxtitle">{{ $module->id ? trans('origami::module.edit') : trans('origami::module.new') }}</h1>
 			<form method="POST" action="{{ !$module->uid ? origami_url('/modules/create') : origami_url('/modules/'.$module->uid) }}">
 				{{ csrf_field() }}
 				@include('origami::partials.errors')
-				
+
 				<div class="m-b-3">
 					<div class="radiobutton-icon">
 						<input class="radio" v-model="module.list" type="radio" name="list" value="0" id="list-0">
 						<label for="list-0">
 							<svg class="icon"><use xlink:href="#icon-single"/></use></svg>
-							<p>Single</p>
+							<p>@lang('origami::module.single')</p>
 						</label>
 					</div>
 					<div class="radiobutton-icon">
 						<input class="radio" v-model="module.list" type="radio" name="list" value="1" id="list-1">
 						<label for="list-1">
 							<svg class="icon"><use xlink:href="#icon-list"/></use></svg>
-							<p>List</p>
+							<p>@lang('origami::module.list.title')</p>
 						</label>
 					</div>
 				</div>
@@ -33,29 +33,29 @@
 				<div class="grid">
 					<div class="col-m-12">
 						<div class="form-group">
-							<label>Name</label>
+							<label>@lang('origami::global.name')</label>
 							<input type="text" v-model="module.name" name="name" class="form-input" autofocus>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="checkboxes">
 					<input type="hidden" name="sortable" value="0">
 					<div class="switch-checkbox" v-if="module.list==1">
 						<label>
 							<input type="checkbox" name="sortable" v-model="module.sortable" v-bind:value="1">
-							<div class="title">Sortable</div>
+							<div class="title">@lang('origami::global.sortable')</div>
 							<div class="check">
 								<div class="handle"></div>
 							</div>
 						</label>
 					</div>
-					
+
 					<input type="hidden" name="only_admin" value="0">
 					<div class="switch-checkbox">
 						<label>
 							<input type="checkbox" name="only_admin" v-model="module.only_admin" v-bind:value="1">
-							<div class="title">Only visible for admins</div>
+							<div class="title">@lang('origami::module.info.admin')</div>
 							<div class="check">
 								<div class="handle"></div>
 							</div>
@@ -66,17 +66,17 @@
 					<div class="switch-checkbox" v-if="module.list==1">
 						<label>
 							<input type="checkbox" name="dashboard" v-model="module.dashboard" v-bind:value="1">
-							<div class="title">Show on dashboard</div>
+							<div class="title">@lang('origami::module.info.dashboard')</div>
 							<div class="check">
 								<div class="handle"></div>
 							</div>
 						</label>
 					</div>
 				</div>
-				
-				<button type="submit" class="button">{{ $module->id ? 'Update' : 'Create' }}</button>
+
+				<button type="submit" class="button">{{ $module->id ? trans('origami::global.update') : trans('origami::global.create') }}</button>
 				@if($module->id)
-				<button type="button" class="button button-link" v-on:click="confirm('Are you absolutely sure you want to remove this module?','{{ origami_url('/modules/'.$module->uid.'/remove') }}')">Remove module</button>
+				<button type="button" class="button button-link" v-on:click="confirm('{{ trans('origami::module.info.remove') }}','{{ origami_url('/modules/'.$module->uid.'/remove') }}')">@lang('origami::module.remove')</button>
 				@endif
 			</form>
 		</div>

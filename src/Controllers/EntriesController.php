@@ -115,7 +115,7 @@ class EntriesController extends Controller
     public function remove(Module $module, Entry $entry)
     {
         $entry->delete();
-        return redirect(origami_path('/entries/'.$module->uid))->with('status', 'Entry removed');
+        return redirect(origami_path('/entries/'.$module->uid))->with('status', trans('origami::message.entry.removed'));
     }
 
     /**
@@ -177,10 +177,10 @@ class EntriesController extends Controller
 
         // Check if we need to redirect from a submodule
         if($entry->parent)
-            return redirect(origami_path('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid))->with('status', 'Entry saved');
+            return redirect(origami_path('/entries/'.$entry->parent->entry->module->uid.'/'.$entry->parent->entry->uid))->with('status', trans('origami::message.entry.saved'));
 
         // Normal redirect back to the module
-        return redirect(origami_path('/entries/'.$entry->module->uid))->with('status', $entry->module->list ? ($entry->wasRecentlyCreated ? 'Entry created' : 'Entry saved') : 'Changes saved');
+        return redirect(origami_path('/entries/'.$entry->module->uid))->with('status', $entry->module->list ? ($entry->wasRecentlyCreated ? trans('origami::message.entry.created') : trans('origami::message.entry.saved')) : trans('origami::message.changes_saved'));
     }
 
     /**

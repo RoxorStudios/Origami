@@ -4,7 +4,7 @@
 
 <div class="banner">
 	<div class="content">
-		<h1 class="big l t m-0">Hi {{ $me->firstname }}</h1>
+		<h1 class="big l t m-0">@lang('origami::dashboard.greeting') {{ $me->firstname }}</h1>
 	</div>
 </div>
 
@@ -20,7 +20,7 @@
 								<thead>
 									<tr>
 										<th>{{ $module->defaultField }}</th>
-										<th>Created</th>
+										<th>@lang('origami::global.created')</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -34,7 +34,7 @@
 							</table>
 						@else
 						<div class="no-items no-icon">
-							<p class="l w s m-0">No entries in this module</p>
+							<p class="l w s m-0">@lang('origami::module.entries.empty')</p>
 						</div>
 						@endif
 
@@ -46,7 +46,7 @@
 @else
 <div class="dashboard">
 	<svg class="icon"><use xlink:href="#icon-info"/></use></svg>
-	You can add modules to the dashboard by checking the ‘show on dashboard’ checkbox on the module edit page.
+	@lang('origami::dashboard.info.module')
 </div>
 @endif
 
