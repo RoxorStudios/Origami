@@ -10,7 +10,7 @@ return [
     'module'            => [
         'created'           => 'Module created',
         'removed'           => 'Module removed',
-    ]
+    ],
     'entry'             => [
         'created'           => 'Entry created',
         'saved'             => 'Entry saved',
