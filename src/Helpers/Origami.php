@@ -64,7 +64,7 @@ function origami_uid($table)
 {
 	do $uid = origami_number(12);
 	while (\DB::table($table)->where('uid',$uid)->count());
-	
+
 	return $uid;
 }
 
@@ -108,7 +108,7 @@ function origami_boolToInt($value)
  */
 function origami_content()
 {
-	return 'origami';
+	return ltrim(rtrim(env('CONTENT_PROJECT', ''), '/') . '/origami', '/');
 }
 
 /**
@@ -124,7 +124,7 @@ function origami_thumbnail($filename)
  */
 function origami_disk()
 {
-	return 'public';
+	return env('APP_FILESYSTEM', 'public');
 }
 
 /**
@@ -132,7 +132,8 @@ function origami_disk()
  */
 function origami_content_url($path='')
 {
-	return asset('storage/'.$path);
+	$content_path = env('CONTENT_PATH') && env('CONTENT_PROJECT') ? rtrim(str_ireplace(env('CONTENT_PROJECT'), '', env('CONTENT_PATH')), '/') : asset('storage/');
+	return rtrim(rtrim($content_path, '/') . '/' . ltrim($path, '/'), '/');
 }
 
 /**
@@ -149,7 +150,7 @@ function origami_version()
 function getSubmoduleTree($module, $recursive = false)
 {
 	$output = [];
-	
+
 	if($module->field) {
 		$output[] = $module->field->module;
 		$output = array_merge($output,getSubmoduleTree($module->field->module,true));
@@ -160,4 +161,3 @@ function getSubmoduleTree($module, $recursive = false)
 
 	return $output;
 }
-
